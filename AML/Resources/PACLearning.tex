@@ -1,0 +1,20 @@
+\section{PAC Learning}
+Empirical error: $\hat{\mathcal{R}}_n(c) = \tfrac{1}{n}\sum_{i=1}^n \mathbb{I}_{\{c(x_i)\neq y\}}$ \\
+Expected error: $\mathcal{R}(c) = P\{c(x)\neq y\}$ \\
+ERM: $\hat{c}_n^* = \argmin_{c\in\mathcal{C}} \hat{\mathcal{R}}_n(c)$ \\
+opt: $c^* \in \min_{c\in\mathcal{C}} \mathcal{R}(c)$, $|\mathcal{C}|$ finite \\
+Generalization error: $\mathcal{R}(\hat{c}_n^*) = P\{ \hat{c}_n^*(x)\neq y \}$ \\
+$\mathcal{A}$ can learn $c$ if $\exists \pi \in$ Polynomials s.t.:\\
+\begin{inparaitem}[\color{red}\textbullet]
+    \item $\forall \text{ distribution } \mathcal{D} \text{ over } X$ \\
+    \item $\forall \epsilon \in (1, \frac{1}{2}),\;\forall \delta \in (1, \frac{1}{2})$ \\
+    \item $\forall n \geq \pi(\frac{1}{\epsilon}, \frac{1}{\delta}, \text{size}(c))$\\
+\end{inparaitem}
+then $\mathbbm{P}_{\mathcal{Z}\sim\mathcal{D}}\left(\mathcal{R}(\mathcal{A}(\mathcal{Z}))\leq \epsilon\right)\geq 1-\delta$\\
+
+VC ineq.: $\mathcal{R}(\hat{c}_n^*) - \inf\limits_{c\in\mathcal{C}}\mathcal{R}(c) \leq 2\sup\limits_{c\in\mathcal{C}}|\hat{\mathcal{R}}_n(c) - \mathcal{R}(c)|$ \\ 
+$P\{ \mathcal{R}(\hat{c}_n^*) - \mathcal{R}(c^*) > \epsilon \} \leq P\{ \sup\limits_{c\in\mathcal{C}}|\hat{\mathcal{R}}_n(c) - \mathcal{R}(c)| > \frac{\epsilon}{2} \} $\\
+$\leq 2|\mathcal{C}| exp(-2n\epsilon ^2 /4) $ if $\mathcal{C}$ is finite\\
+$\leq 9n^{\mathcal{VC}_{\mathcal{C}}}exp(-n\epsilon ^{2} /32)$ \\
+where the $\mathcal{VC}$ dimension of a function class $\mathcal{C}$ 
+is the maximum number of points that can be arranged so that $\mathcal{C}$ shatters them.

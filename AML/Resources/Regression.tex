@@ -1,0 +1,80 @@
+% -*- root: Main.tex -*-
+\section{Statistics Recap}
+%\subsection*{Linear Regression}
+%Error: $\hat{R}(w) = \sum_{i=1}^n (y_i - w^Tx_i)^2 = ||Xw-y||^2_2$\\
+%Closed form: $w^*=(X^T X)^{-1} X^T y$\\
+%Gradient: $\nabla_w \hat{R}(w) = 2X^T (Xw-y)$
+\subsection*{Estimation}
+Consistency: $\hat{\theta_n} \stackrel{\text{\tiny P}}{\rightarrow} \theta$,
+i.e. $\forall\epsilon P \{|\hat{\theta_n}-\theta| \geq\epsilon\} \stackrel{n \to\infty}{\longrightarrow} 0 $\\
+Asymptotic normality: $\sqrt{N}(\theta - \hat{\theta_n}) \to \mathcal{N}(0, J^{-1}IJ^{-1})$ \\
+Asymptotic efficiency: $\hat{\theta_n}$ reaches the Rar Cramer bound in the limit, i.e. $\lim_{n\to\infty} (V[\hat{\theta_n}]\mathcal{I}_n(\theta))^{-1} = 1$
+\subsection*{Rao-Cramer}
+$\Lambda = \frac{\partial \log \mathbb{P}(x|\theta )}{\partial \theta}$ (score function), $E[\Lambda ]=0$\\
+Fisher information: $\mathcal{I}(\theta)= \mathbb{V}[\Lambda]$ \\
+$\mathcal{J}= E[\Lambda^{2}]= -E[\frac{\partial^2 \log \mathbb{P}(x|\theta ) }{\partial \theta \partial \theta ^{T}}]= -E[\frac{\partial \Lambda}{\partial \theta}]$ \\
+If the model is realizable then $\mathcal{I}=\mathcal{J}$ \\
+\textbf{Oss:} For the whole model:\\ $\mathcal{I}_n = \mathbb{V}\left[\frac{\partial \log \mathbb{P}(x_i, i=1:n|\theta )}{\partial \theta}\right]=n\mathcal{I}$
+
+let $b(\hat\theta) = \E\left[\hat\theta\right]-\theta$\\
+MSE bound: $E[(\hat \theta -\theta )^{2}] \geq \frac{[1 + b^{\prime} (\hat\theta)]^{2}}{n E[\Lambda ^{2}]} + {b(\hat\theta)}^{2}$ \\
+Biased estimators: $var(\hat{\theta}) \geq \frac{[1 + b^{\prime}(\hat\theta)]^2}{n\mathcal{I}(\theta)}$ \\
+Efficiency: $e(\hat{\theta}) = \frac{I(\theta)^{-1}}{var(\hat{\theta})} \leq 1$ \\
+Cauchy-Schwarz: $|E(XY)|^2 \leq E(X^2) E(Y^2)$ 
+
+
+% \subsection*{Smoothing Splines}
+% $RSS(f,\lambda) = \sum\limits_{i=1}^n (y_i - f(x_i))^2 + \lambda  \int (f''(x))^2dx$\\
+
+%\textbf{Unbiasedness}: $\mathbb{E}[\hat{\beta}] = \mathbb{E}[(X^TX)^{-1}X^Ty] = (X^TX)^{-1}X^T\mathbb{E}[X\beta+\epsilon] = (X^TX)^{-1}(X^TX)\beta+X^T\mathbb{E}[\epsilon] = \beta + 0$
+%\textbf{Variance of} $a^T\hat{\beta}$: $\mathbb{V}(a^T(X^TX)^{-1}X^T(X\beta + \epsilon)) = \mathbb{V}(a^T\beta) + \mathbb{E}(a^T(X^TX)^{-1}X^T\epsilon\epsilon^TX(X^TX)^{-1}a) = \sigma^2 a^T(X^TX)^{-1}a$ 
+
+%\subsection*{Gauss-Markov Theorem}
+%For any linear estimator $\widetilde{\theta}=c^T\mathbf{y}$ that is unbiased for $a^T\beta$ it holds: $\mathbb{V}(a^T\hat{\beta}) \leq \mathbb{V}(c^T\mathbf{y})$\\
+%Proof: Let $c^T \mathbf{y} = a^T\hat{\beta} + a^T\mathbf{D}\mathbf{y} = a^T((\mathbf{X^TX})^{-1}\mathbf{X}^T + \mathbf{D})\mathbf{y}$ be an unbiased estimator of $a^T \beta$; then it follow $a^T \mathbf{DX}\beta = 0$ which implies $\mathbf{DX} = 0$.\\
+%$\mathbb{V}(c^T \mathbf{y}) = \mathbb{E}[(c^T \mathbf{y})^2]-\mathbb{E}(c^T \mathbf{y})^2 = c^T(\mathbb{E}\mathbf{y}\mathbf{y}^T - \mathbb{E}\mathbf{y}\mathbb{E}\mathbf{y}^T)c = \sigma^2 c^T c $
+%= $\sigma^2 \big( a^T ((\mathbf{X^T X})^{-1}\mathbf{X}^T + \mathbf{D}) (\mathbf{X}(\mathbf{X^T X})^{-1}+\mathbf{D}^T)a \big )$\\
+%= $\sigma^2 \big( a^T (\mathbf{X^T X})^{-1}a +\mathbf{DD^T}a \big )$
+%= $\mathbb{V}(a^T\hat{\beta}) + a^T \mathbf{DD^T}a \geq \mathbb{V}(a^T\hat{\beta})$ (note: $\mathbf{DD^T}$ is PSD)
+
+
+%High bias can cause an algorithm to miss the relevant relations between features and target outputs (underfitting).\\
+%High variance can cause overfitting: modeling the random noise in the training data, rather than the intended outputs.
+
+% \subsection*{Gradient Descent}
+% 1. Start arbitrary $w_o \in \mathbb{R}$\\
+% 2. For $i$ do $w_{t+1} = w_t - \eta_t \nabla \hat{R}(w_t)$
+
+%\subsection*{Curse of Dimensionality}
+%To obtain a reliable estimate at a given regularity, the required number of samples grows exponentially with the dimension of the sample space.
+
+% \subsection*{Expected Error}
+% For generalization, minimize the expected error
+% $R(w) = \int P(x,y) (y-w^Tx)^2 \partial x \partial y$\\
+% $= \mathbb{E}_{x,y}[(y-w^Tx)^2]$
+\section{Linear Regression}
+\(y = X\beta + \epsilon\) where \(y \in \mathbb{R}^n, \;X \in \mathbb{R}^{n\times d},\;\beta \in \mathbb{R}^d\)
+
+\subsection*{Risk Decomposition Theorem}
+\(\mathbb{E}_{Y,D}\left[ \left( Y-\hat{f}(x_0)\right) ^2 \right] = Bias + Vairance + Noise\)\\
+\(Bias =\left(\mathbb{E}\left[Y\vert X=x_0\right]-\mathbb{E}_{D}\left[\hat{f}(x_0)\right]\right)^2\)\\
+\(Variance =  \mathbb{E}_{D}\left[ \left( \mathbb{E}_{D}\left[\hat{f}(x_0)\right]- \hat{f}(x_0)\right) ^2 \right]\)\\
+\(Noise =  \mathbb{E}_{Y}\left[\left(Y-\mathbb{E}\left[Y\vert X=x_0\right]\right)^2\right] \)
+\subsection*{Combination of Regression Models:}
+$\text{bias}[\hat{f}(x)] = \frac{1}{B} \sum_{i=1}^{B} \text{bias}[\hat{f}_i(x)]$\\
+{\scriptsize $\mathbbm{V}[\hat{f}(x)] = \frac{1}{B^2}\sum_i \mathbbm{V}[\hat{f}_i(x)]
++ \frac{1}{B^2}\sum_{i\neq j} cov[\hat{f}_i(x), \hat{f}_j(x)] \approx \frac{\sigma^2}{B}$}
+\subsection*{Minimum square linear regression}
+\(\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}} \Rightarrow \hat{\beta} = \left(X^TX \right)^{-1}X^T y\). Here \(\hat{\beta}\) is the BLUE (Best Linear Unbiased Estimator)
+
+\subsection*{Lasso regression}
+\(\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}} + \lambda\norm{\beta}_{1}\Rightarrow \hat{\beta} =\)  No closed form (LARS algorithm) but it is a convex problem\\
+Bayesian prior: \(p(\beta_i) = \frac{1}{4\sigma^2}exp\left(-\vert\beta_i\vert\frac{\lambda}{2\sigma^2}\right)\)\\
+{Const. opt. \scriptsize  $\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}}$ s.t. $\norm{\beta}_1<s_\lambda$}
+\subsection*{Ridge regression}
+\(\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}} + \lambda\norm{\beta}_{2}\Rightarrow \hat{\beta}  =  \left(X^TX + \lambda I\right)^{-1}X^T y\) \\
+Bayesian prior \(p(\beta) = N(0, \frac{\sigma^2}{\lambda}I)\)\\ 
+\textbf{Oss:} if instead \(p(\beta) = N(0, \Lambda^{-1})\) then $\hat{\beta} = \left(X^TX + \sigma^2 \Lambda\right)^{-1}X^T y$\\
+{Const. opt. \scriptsize  $\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}}$ s.t. $\norm{\beta}_2<s_\lambda$}\\ 
+Let \(\mu_i\) be the singular values of \(X\) then \(\vert \left(X^TX \right)^{-1}X^T \vert = \prod^{i} \frac{1}{\mu_i}\) . And  \(\vert \left(X^TX + \lambda I \right)^{-1}X^T \vert =
+ \prod^{i} \frac{\mu_i^2}{\mu_i^2 + \lambda}\). Therefore if \(\mu_i \simeq 0\) with Ridge we have no problems (stable results against inter column linear dependence)

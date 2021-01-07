@@ -1,0 +1,81 @@
+\section{Basics}
+\subsection*{Gaussian}
+$f(x) = \frac{1}{\sqrt{(2\pi)^d\det\Sigma}} e^{- \frac{1}{2} (x-\mu)^T \Sigma^{-1} (x-\mu)},\quad \mathcal{N}(x|\mu, \Sigma)$\\
+$X {\sim} \mathcal{N}(\mu,\Sigma),\;Y{=}A{+}BX \Rightarrow Y{\sim}\mathcal{N}(A{+}B\mu,B\Sigma B^T)$ 
+Conditionate Gaussians\\
+\(
+\begin{bmatrix} \beta \\ x \end{bmatrix} \sim N\left(\begin{bmatrix}\bar{\beta} \\ \bar{x}\end{bmatrix},\begin{bmatrix} \Sigma_{11}&\Sigma_{12} \\\Sigma_{21}&\Sigma_{22} \end{bmatrix}\right)
+\Rightarrow\beta\vert x=y \sim N\left(\bar{\beta} + \Sigma_{12}\Sigma^{-1}_{22}(y-\bar{x}, ) , \Sigma_{11}-\Sigma_{12}\Sigma^{-1}_{22}\Sigma_{21}\right)
+\)
+\subsection*{Primal Dual problem}
+Let \(\mathcal{P} = 
+	\begin{cases}
+		\min_w f(w)\\
+		g_i(w)=0\;\forall i\\
+		h_j(w)\leq 0\;\forall j\\
+	\end{cases}
+	\)\\
+Then the Slater's conditions are:\\
+\(\exists w\; \vert g_i(w) = 0, h_j (w) < 0 \;\forall i,j\)\\
+The lagrangian is:\\
+\(\mathcal{L}(w,\lambda,\alpha)=f(w) + \sum_i\lambda_ig_i(w) + \sum_j \alpha_jh_j(w)\)\\
+\(\mathcal{D} = 	
+\begin{cases}
+	\max_{\lambda,\alpha} \theta(\alpha, \lambda)\\
+	\theta(\alpha, \lambda) = \min_w \mathcal{L}(w,\lambda,\alpha)\\
+	\alpha_j(w)\geq 0\;\forall j\\
+\end{cases}
+\)\\
+In general the solution of the \(\mathcal{D}\) is smaller then $\mathcal{P}$. But if the Slater conditions holds then they are equal. And we get the complementary slackness: \(\alpha_j^*h_j(w^*) = 0\;\forall\) \\
+ The optimal $w^{*} = min_w {\mathcal{L}(w,\lambda^*,\alpha^*)}$
+%General p-norm: $\norm{ x }_p = (\sum_{i=1}^n |x_i|^p)^{1/p}$
+
+%\subsection*{Moments}
+%\begin{inparaitem}[\color{red}\textbullet]
+% Variance
+%\item $Var[X]=\int_x(x-\mu)^2p(x) dx$ \\
+%\item $Var[X]=E[(X-E[X])^2]=E[X^2]-E[X]^2$ \\
+%\item $Var[X{+}Y]=Var[X]{+}Var[Y]{+}2Cov[X,Y]$ \\
+% Covariance
+%\item $Cov[X,Y] = E[(X - E[X])(Y - E[Y])]$ \\
+%\item $Cov[aX,bY]{=}abCov[X,Y]$ \\
+%\item $K_{\bm{XY}} = cov(X,Y) = E[XY^T] - E[X]E[Y^T]$
+%\end{inparaitem}
+\subsection*{Calculus}
+\begin{inparaitem}[\color{red}\textbullet]
+	%\item Part.: $\int u(x)v'(x) dx = u(x)v(x) - \int v(x)u'(x) dx$\\
+	%\item Chain r.: $\frac{f(y)}{g(x)} = \frac{dz}{dx} \Big|_{x=x_0}= \frac{dz}{dy}\Big|_{z=g(x_0)}\cdot \frac{dy}{dx} \Big|_{x=x_0}$ \\
+	%\item $g_x(1) = g_x(0) + g'_x(0) + \int_{0}^{1} g_x''(s)(1-s) ds$ \\
+	%\item $g(\mathbf{w}+\delta) - g(\mathbf{w}) = %\int_{\mathbf{w}}^{\mathbf{w+\delta}} \nabla g(\mathbf{u}) du = (\int_{0}^{1} \nabla g(\mathbf{w}+t\delta)dt) \cdot \delta$\\
+	\item $\frac{\partial}{\partial \mathbf{x}}(\mathbf{b}^\top \mathbf{x}) = \frac{\partial}{\partial \mathbf{x}}(\mathbf{x}^\top \mathbf{b}) = \mathbf{b}$
+	\item $\frac{\partial}{\partial \mathbf{x}}(\mathbf{x}^\top \mathbf{x}) = 2\mathbf{x}$ \\
+	\item $\frac{\partial}{\partial \mathbf{x}}(\mathbf{x}^\top \mathbf{A}\mathbf{x}) = (\mathbf{A}^\top + \mathbf{A})\mathbf{x} \stackrel{\text{\tiny A sym.}}{=} 2\mathbf{A}\mathbf{x}$ \\
+	\item $\frac{\partial}{\partial \mathbf{x}}(\mathbf{b}^\top \mathbf{A}\mathbf{x}) = \mathbf{A}^\top \mathbf{b}$
+	\item $\frac{\partial}{\partial \mathbf{X}}(\mathbf{c}^\top \mathbf{X} \mathbf{b}) = \mathbf{c}\mathbf{b}^\top$ \\
+	\item $\frac{\partial}{\partial \mathbf{X}}(\mathbf{c}^\top \mathbf{X}^\top \mathbf{b}) = \mathbf{b}\mathbf{c}^\top$
+	\item $\frac{\partial}{\partial \mathbf{x}}(\| \mathbf{x}-\mathbf{b} \|_2) = \frac{\mathbf{x}-\mathbf{b}}{\|\mathbf{x}-\mathbf{b}\|_2}$ \\
+	\item $\frac{\partial}{\partial \mathbf{x}}(\|\mathbf{x}\|^2_2) = \frac{\partial}{\partial \mathbf{x}} (\|\mathbf{x}^\top \mathbf{x}\|_2) = 2\mathbf{x}$
+	\item $\frac{\partial}{\partial \mathbf{X}}(\|\mathbf{X}\|_F^2) = 2\mathbf{X}$ \\
+	\item $x^T A x = Tr(x^T A x) = Tr(x x^T A) = Tr(A x x^T)$ \\
+	\item $\tfrac{\partial}{\partial A} Tr(AB) {=} B^T$
+	\item $\frac{\partial}{\partial A} log|A| {=} A^{-T}$ \\
+	\item $\sigma(x) = \frac{1}{1+e^{-x}}$ \\
+	\item $\nabla \sigma(x) = \sigma(x)(1-\sigma(x)) = \sigma(x)\sigma(-x)$\\
+	\item $\nabla \text{tanh}(x) = 1-\text{tanh}^2(x)$ 
+	\item $tanhx {=} \frac{sinhx}{coshx} {=} \frac{e^{x}-e^{-x}}{e^{x} + e^{x}}$
+\end{inparaitem}
+\subsection*{Probability / Statistics}
+\begin{compactdesc}
+	\item[Bayes' Rule]$ P(Y|X) = \frac{P(X|Y)P(Y)}{P(X)}\frac{P(X|Y)P(Y)}{\sum\limits^k_{i=1}P(X|Y_i)P(Y_i)}$\\
+	\item[MGF] $\mathbf{M}_X(t)=\mathbb{E}[e^{\mathbf{t}^T \mathbf{X}}]$, $\mathbf{X}=(X_1,.., X_n) $
+\end{compactdesc}
+
+Markov ineq: $P\{X\geq\epsilon\} \leq \tfrac{\mathbb{E}[X]}{\epsilon}$ (for nonneg. X) \\
+Boole's inequality: $P(\bigcup_i A_i) \leq \sum_i P(A_i)$ \\
+Hoeffding's lemma: $\mathbb{E}[e^{sX}] \leq exp(\tfrac{1}{8}s^2(b-a)^2)$ where $\mathbb{E}[X]=0$, $P(X\in[a,b])=1$ \\
+Hoeffding's: $P\{S_n {-} \mathbb{E}[S_n] {\geq} t\} {\leq} exp({-} \frac{2t^2}{\sum_i (b_i - a_i)^2})$ \\
+Normalized: $P\{\widetilde{S}_n {-} \mathbb{E}[\widetilde{S}_n] {\geq} \epsilon\} {\leq} exp({-} \frac{2n^2 \epsilon ^2}{\sum_i (b_i {-} a_i)^2})$ \\
+{\small Error bound: \\$P\{ \sup\limits_{c\in\mathcal{C}}|\hat{\mathcal{R}}_n(c) - \mathcal{R}(c)| > \epsilon \} \leq 2|\mathcal{C}| exp(-2n\epsilon ^2)$} 
+
+\subsection*{Jensen's inequality}
+	X:random variable \& $\varphi$:convex function $\rightarrow$ $\varphi(\mathbb{E}[X]) \leq \mathbb{E}[\varphi(X)]$

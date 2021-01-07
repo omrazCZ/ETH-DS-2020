@@ -1,0 +1,28 @@
+
+\section{Neural Network}
+\subsection*{Backpropagation}
+Let $\Phi(x) = f^{(n)}_{\theta_n}\circ f^{(n-1)}_{\theta_{n-1}}\circ \dots \circ f^{(1)}_{\theta_{1}}(x)$\\
+$\partial_{\Phi}f^{(i)}\doteq\partial_z f^{(i)}(z,\theta_i)\vert_{z=\Phi^{(i-1)}(x)}$\\
+$\partial_{\theta}f^{(i)}\doteq\partial_z f^{(i)}(\Phi^{(i-1)}(x),\theta)\vert_{\theta = \theta_i}$
+
+\begin{algorithm}[H]
+    \KwResult{$\partial_{\theta_i}\Phi(x)\forall i$}
+    Initialize $B = 1$\;
+     \For{$i \gets n, n-1, \dots, 1$}{
+        $\partial_{\theta_i}\Phi(x) \gets B \partial_\theta f^{(i)}$\;
+        $B \gets B\partial_\Phi f^{(i)}$\;
+     }
+    \end{algorithm}
+Once we have this we can $\nabla \downarrow$ 
+\subsection*{Stocastic Gradient Descent}
+\begin{algorithm}[H]
+    \KwResult{optimal $\theta^*$}
+     Initialize $\theta$\;
+     \While{Test error is decreasing}{
+        $\nabla_\theta Loss = \sum_{(x,y)\in S_k}\nabla_\theta \mathcal{L}(NN(x),y)$\;
+        $\theta \gets \theta - \eta(k)\nabla_\theta Loss $\;
+     }
+    \end{algorithm}
+    \textbf{Oss:} $S_k \in D$ and changes at each iteration (Mini Batch)  \\
+    \textbf{Oss:} As long as $\sum_k \eta(k) = \infty$ and $\sum_k \eta^2(k) <  \infty$ the SGD converges\\  
+    \textbf{Advantages over Normal Gradient Descent:} 1) Can handle large Dataset 2) Faster improvment (with regards to time, not iterations) 3) Escapes local minima 4) Lower generalization error\\  

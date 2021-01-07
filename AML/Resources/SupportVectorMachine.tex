@@ -1,0 +1,91 @@
+% -*- root: Main.tex -*-
+\section{SVM} 
+Like Percepton but maximizing the margin. Equivalent to\\
+\(\mathcal{P} =
+\begin{cases}
+	\min_{w,w_0} \frac{\norm{w}^2}{2}\\
+	y_i(w^Tx_i +  w_0)\geq 1 \;\forall i\\
+\end{cases}
+\)
+where the margin size is \(\frac{2}{\norm{w}^2}\).\\
+$X^+, X^-$ are separable $\Rightarrow$ Slater conditions $\Rightarrow$ \\
+\(\mathcal{D} =
+	\begin{cases}
+		\max_{\alpha} \sum_i \alpha_i - \frac{1}{2}\sum_{i,j}\alpha_i\alpha_jy_iy_jx_i^Tx_j\\
+		\alpha_i\geq 0 \;\forall i\\
+	\end{cases}
+		\)\\
+Complementary slackness \(\alpha_i^*h_i(w^*)=0\) so either \(\alpha^*_i = 0\)  or \(x_i\) is a Support Vector
+\subsection*{Soft margin SVM}
+We add a C parameter (C small \(\Rightarrow\) soft):\\
+\(\mathcal{P} =
+\begin{cases}
+	\min_{w,w_0, \xi} \frac{\norm{w}^2}{2} + C\sum_i\xi_i\\
+	y_i(w^Tx_i +  w_0)\geq 1 -\xi_i\;\forall i\\
+	\xi_i\geq 0\;\forall i\\
+\end{cases}
+\)\\
+\(\mathcal{D} =
+\begin{cases}
+	\max_{\alpha_i}\sum_i \alpha_i - \frac{1}{2}\sum_{i,j}\alpha_i\alpha_jy_iy_jx_i^Tx_j\\
+	0\leq \alpha_i\leq C \;\forall i\\
+\end{cases}
+\)\\
+\(\xi_i^{*} = \max(0,1-y_i({w^*}^Tx_i + w_0^*))\)\\
+$y = sgn\left({w^*}^Tx\right) = sgn\left(\left(\sum_i\alpha_i^*y_ix_i)\right)^Tx_j \right)$\\
+\textbf{Non linear SVM: }$x_i^Tx_j \rightarrow \phi(x_i)^T\phi(x_j) \rightarrow k(x_i,x_j)$%Kernels \(k\) must be simmetric and: \\
+%\(\forall (x_i)_{i = 1:n}\in X^n ,\;\forall c\in\mathbb{R}\) holds that \(c^TKc \geq 0,\; K_{ij} = k(x_i, x_j)\)\\
+\subsection*{Multiclass SVM (ovr)}
+Train a binary classifier for each class (one vs the rest). Then I assign a score $f_c(x)=w_c^Tx$. Predicitons: $c^*=\argmax_c f_c(x)$
+\subsection*{Structured SVM}
+Too many class for ovr. $\Psi: X \times Y \rightarrow \mathbbm{R}^{m+d}$ is called Joint feature map
+\( 
+	\mathcal{P}= \scriptsize
+\begin{cases}
+	\min_{w,w_0} \frac{\norm{w}^2}{2} + \frac{C}{n}\sum_{i=1}^n \xi_i\\
+	w^T\Psi(x_i,y_i)\geq \Delta(y_i,y') + w^T\Psi(x_i,y') -\xi_i\;\forall i\; \forall y' \neq y_i\\
+	\xi \geq 0 \;\forall i\\
+\end{cases}
+\)
+Theorem \(\Delta\) as Loss (Structured SVM in Statistical Learning):\\
+$\hat{\mathcal{R}}(\mathcal{Z}_{train})\doteq \frac{1}{n} \sum_{i=1}^n \Delta(y_i, c_{w^*}(x_i)) \leq \frac{1}{n}\sum_{i=1}^n \xi^*_i$
+% \subsection*{Kernelized SVM}
+% $
+% \max_{\alpha} \sum_{i=1}^{n} \alpha_i - \frac{1}{2} \sum_{i,j} \alpha_i \alpha_j y_i y_j k(x_i, x_j), \text{ s.t. } 0 \geq \alpha_i \geq C
+% $\\
+% Classify: $y = sign(\sum_{i=1}^{n} \alpha_i y_i k(x_i, x))$
+
+% \subsection*{How to find $a^T$?}
+% $a = \{w_0,w\}$ used along $\widetilde{x} = \{1,x\}$
+
+% Gradient Descent: $a(k+1) = a(k) - \eta(k) \nabla J(a(k))$
+
+% Newton method: 2nd order Taylor to get $\eta_{opt} = H^{-1}$ with $H=\frac{\partial^2 J}{\partial a_i \partial a_j}$
+
+% $J$ is the cost matrix, popular choice is
+
+
+% \subsection*{Perceptron Algorithm}
+% Stochastic Gradient + Perceptron loss\\
+
+% \emph{Theorem:} If $D$ is linearly seperable $\Rightarrow$ Perceptron will obtain a linear seperator.
+
+% \subsection*{Support Vector Machine}
+% Try to maximize a 'band' around the seperator.\\
+
+% \subsection*{Matrix-Vector Gradient}
+% %multiply transposed matrix to the same side as its occurance w.r.t. derivate variable: $\beta \in \mathbb{R}^d$
+% $\nabla_\beta ( ||y-X\beta||_2^2 + \lambda ||\beta||_2^2 ) = 2X^T (y-X\beta) + 2\lambda \beta$\\
+
+% \subsection*{Hinge loss}
+% loss for support vector machine.\\
+% $l_{SVM}(w,x_i,y_i) = \max \{0,1-y_iw^Tx_i\} + \lambda ||w||_2^2$\\
+% derivation:\\
+% $\frac{\partial}{\partial w_k} l_{SVM}(w,y_i,x_i) = \left \{
+% \begin{array}{lr}
+% 0 \text{ , if } 1-y_iw^Tx_i < 0 \\
+% -y_ix_{i,k} + 2\lambda w_k \text{ , otherwise}
+% \end{array} \right.	$
+
+% \subsection*{Sparse L1-SVM}
+% $\underset{w}{\operatorname{argmin}} \sum \limits_{i=1}^n \max (0, 1-y_i w^T x_i) + \lambda ||w||_1$
