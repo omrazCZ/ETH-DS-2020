@@ -10,7 +10,7 @@ $p(\theta\vert y)\simeq q(\theta)=N(\hat\theta,\Lambda^{-1})$
 
 \subsection{Variationa Inverence}
 $\hat q = \argmin_{q \in Q} KL(q\vert\vert p(\cdot\vert y))$\\
-$\hat q = ELBO$ Evidence Lower Bound\\
+$\hat q = \argmax_{q \in Q} ELBO$ Evidence Lower Bound\\
 $ELBO \doteq \mathbb{E}_{\theta \sim q}\left[\log{p(y\vert\theta)}\right]-KL(q\vert\vert p(\cdot)) \leq \log{p(y)}$
 
 

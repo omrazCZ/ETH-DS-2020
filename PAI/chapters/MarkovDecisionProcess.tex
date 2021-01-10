@@ -1,1 +1,50 @@
 \section{Markov Decision Process (MDP)}
+\subsection{Definitions}
+$\mathcal{X}=\left\{1,\dots,n\right\}$ states; 
+$\mathcal{A}=\left\{1,\dots,m\right\}$ actions;\\
+$p(x'\vert x, a)$ transition probability;\\
+$r(x,a)$ reward; 
+$\pi:\mathcal{X}\rightarrow\mathcal{A}$ policy;\\
+$T^\pi\in\mathbb{R}^{n\times n},\; T^\pi_{ij} = p(j\vert i, \pi(i))$ Transition Matrix:\\
+$J(\pi) = \mathbb{E}\left[\sum_{i=0}^{\infty}\gamma^i r(X_i, \pi(X_i))\right]$ Expected value:\\
+$V^\pi:\mathcal{X}\rightarrow \mathbb{R},\; x\mapsto J(\pi\vert X_0 = x)$ Value function;\\
+$Q^V(x,a) = r(x,a) + \gamma\sum_{x\in\mathcal{X}}p(x'\vert x, a)V(x)$ Q func;\\
+$\pi_\mathcal{G}^{V}(x)=\argmax_a Q^V(x,a)$ greedy policy {\scriptsize w.r.t. $V$};
+
+\subsection{Value function Theorem}
+$V^\pi(x) = r(x,\pi(x))+\gamma\sum_{x'\in\mathcal{X}}p(x'\vert x, \pi(x))V^\pi(x')$
+Matrix formulation: $(I-\gamma T^\pi)V^\pi=r^\pi$
+
+\subsection{Bellman Theorem}
+1) $\pi^*$, $V^*$ are optimal policy and it's value func.\\
+2) $\pi^* = \pi_\mathcal{G}^{V^*}$\\
+3) $V^*(x)=max_a\left[r(x,a)+\gamma\sum_{x\in\mathcal{X}}p(x'\vert x, a)V^*(x)\right]$
+1) $\Leftrightarrow$ 2) $\Leftrightarrow$ 3)
+\subsection{Algorithms}
+\textbf{Policy iteration:}\\
+\begin{algorithm}[H]
+    \While(){no more changes}{
+        $\pi \gets \pi_\mathcal{G}^{V}$ (Update the Policy)\\
+        $V \gets (I-\gamma T^\pi)^{-1}r^\pi)$ (Update the value)
+    }
+\end{algorithm}
+\textbf{Value iteration:}\\
+    \begin{algorithm}[H]
+        \While(){$\left\lVert  V_t - V_{t-1}\right\rVert \leq \epsilon$}{
+            \ForEach{$x\in \mathcal{X},\; a\in \mathcal{A}$}{
+                $Q_t(x,a)\gets r(x,a)+\gamma \sum_{x'\in\mathcal{X}}p(x'\vert x, a)V_{t-1}(x)$\\
+            }            
+            \ForEach{$x\in \mathcal{X}$}{
+                $V_t(x)\gets \max_a Q_t(x,a)$\\
+            }
+        }
+        $\hat{\pi} = \pi_\mathcal{G}^{V_T}$; where $V_T$ last found Value
+\end{algorithm}
+\subsection{Partialy Observable MDP (POMDP)}
+POMDP can be seen as MDP where:\\
+1) $\mathcal{X}_{POMDP}$ are prob. distribution over $\mathcal{X}_{MDP}$\\
+2) the actions are the same\\
+3) $r_{POMDP}(b, a)= \mathbb{E}_{x\sim b}\left[r_{MDP}(x, a)\right]$\\
+4) Trans. model: $b_{t+1}(x) = \mathbb{P}(X_{t+1}=x\vert y_{1:t+1}, a_t)$\\
+$b_{t+1}(x) = \frac{1}{Z}p(y_{t+1}\vert X_{t+1}=x)\sum_{x\in \mathcal{X}_MDP}p(x\vert x', a_t)b_t(x')$
+\textbf{How to solve?} Discretize $\mathcal{X}_{POMDP}$ and treat it as a MDP or Policy gradient techniques
