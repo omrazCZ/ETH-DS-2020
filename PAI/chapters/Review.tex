@@ -1,0 +1,46 @@
+\section{Review of useful concepts and Introduction}
+\subsection{Multivariate Gaussian}
+%$\sigma =$ covariance matrix, $\mu$ = mean\\
+$f(x) = \frac{1}{2\pi \sqrt{|\Sigma|}} e^{- \frac{1}{2} (x-\mu)^T \Sigma^{-1} (x-\mu)}$
+
+Suppose we have a Gaussian random vector
+\(
+\begin{bmatrix} 
+    X_A \\ 
+    X_B 
+\end{bmatrix} 
+\sim \mathcal{N}\left(
+\begin{bmatrix}
+    {\mu_A} \\ 
+    {\mu_B}
+\end{bmatrix},
+\begin{bmatrix} 
+    \Sigma_{AA}&\Sigma_{AB} \\
+    \Sigma_{BA}&\Sigma_{BB} 
+\end{bmatrix}\right)
+\Rightarrow X_A\vert X_B=x_B \sim \mathcal{N}\left(
+    \mu_A+\Sigma_{AB}\Sigma^{-1}_{BB}(x_B-\mu_B) , 
+    \Sigma_{AA}-\Sigma_{AB}\Sigma^{-1}_{BB}\Sigma_{BA}
+\right)
+\)
+\subsection{Convex / Jensen's inequality}
+$\text{g(x) is convex} \Leftrightarrow x_1,x_2 \in \mathbb{R}, \lambda \in [0,1]: g''(x) > 0$\\
+$g(\lambda x_1 + (1-\lambda) x_2) \leq \lambda g(x_1) + (1-\lambda) g(x_2)$
+$\varphi(\operatorname{E}[X]) \leq  \operatorname{E}[\varphi(X)]$
+\subsection{Information Theory elements:}
+\textbf{Entropy:} $H(X)\doteq -\mathbb{E}_{x\sim p_X}\left[\log{p_X(x)}\right]$\\
+$H(X\vert Y)\doteq -\mathbb{E}_{(x,y)\sim p_{(X,Y)}}\left[\log{p_{Y\vert X}(y\vert x)}\right]$\\
+if $X\sim\mathcal{N}(\mu,\Sigma) \Rightarrow H(X) = \frac{1}{2}\log{\left[{(2\pi e)}^d \det{(\Sigma)}\right]}$
+\textbf{Chain Rule:} $H(X, Y) = H(Y\vert X)+H(X)$\\
+\textbf{Mutual Info:} $I(X, Y)\doteq KL(p_{(X,Y)}\vert\vert p_Xp_Y)$\\
+$I(X, Y)=H(X)-H(X\vert Y)$\\
+if $X\sim\mathcal{N}(\mu, \Sigma),\; Y=X+\epsilon, \; \epsilon\sim\mathcal{N}(0,\sigma^2 I)$:\\
+then $I(X, Y)=\frac{1}{2}\log{\left[\det{(I+\frac{1}{\sigma^2}\Sigma)}\right]}$
+
+
+\subsection{Kullback-Leiber divergence}
+$KL(p\vert\vert q)=\mathbb{E}_p\left[\log\frac{p(x)}{q(x)}\right]$\\
+if $p_0\sim \mathcal{N}(\mu_0,\Sigma_0),\; p_1\sim \mathcal{N}(\mu_1,\Sigma_1) \Rightarrow KL(p_0\vert\vert p_1)$\\
+{\scriptsize$ = \frac{1}{2}\left(tr\left(\Sigma_1^{-1}\Sigma_0\right) + (\mu_1-\mu_0)^T\Sigma_1^{-1}(\mu_1-\mu_0)-k+\log\frac{\vert\Sigma_1\vert}{\vert\Sigma_0\vert}\right)$}\\
+$\hat q = \argmin_q KL(p\vert\vert q) \Rightarrow$ overconservative\\
+$\hat q = \argmin_q KL(q\vert\vert p) \Rightarrow$ overconfident

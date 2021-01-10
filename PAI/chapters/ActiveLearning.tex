@@ -1,0 +1,21 @@
+\section{Active Learning}
+Let $\mathcal{D}$ be the set of observable points. \\
+We can observe $\mathcal{S}\subseteq \mathcal{D}, \vert \mathcal{S}\vert\leq R$\\
+Information Gain: $\hat{\mathcal{S}}=\argmax_{\mathcal{S}} F(\mathcal{S})=I(f,y_\mathcal{S})$\\
+For GPs: $F(\mathcal{S})=\frac{1}{2}\log\left\lvert I+\frac{1}{\sigma^2}K_{\mathcal{SS}}\right\rvert $\\
+This is NP Hard, $\Rightarrow$ Greedy Algo:\\
+\begin{algorithm}[H]
+    \SetKwInput{kwInit}{init}
+    \SetKwFor{kwWith}{with}{do}{}
+    \kwInit{$\mathcal{S}^*=\emptyset$}
+    \For {$t = 1:R$}
+    {
+        $x_{t} = \argmax_{x\in\mathcal{D}}F(\mathcal{S^*}\cup\left\{x\right\})$\\
+        $\left(x_{t} = \argmax_{x\in\mathcal{D}} \sigma^2_{x}\vert \mathcal{S}\text{ for GPs}\right)$\\
+        $\left(x_{t} = \argmax_{x\in\mathcal{D}} \frac{\sigma^2_{f\vert \mathcal{S}}(x)}{\sigma^2_{n}(x)} \text{ for heter. GPs}\right)$\\
+        $\mathcal{S^*} = \mathcal{S} \cup \left\{x_{t}\right\}$
+    }
+\end{algorithm}
+F is \textbf{Submodular} if: $\forall x \in \mathcal{D}\;\;, \forall A \subseteq B \subseteq D$ holds that:
+$F(A\cup\left\{x\right\})-F(A)\geq F(B\cup\left\{x\right\})-F(B)$\\
+F is Submodular $\Rightarrow F(\mathcal{S}^*)\geq \left(1-\frac{1}{e}\right)F(\hat{\mathcal{S}})$

@@ -1,0 +1,29 @@
+\subsection{Review Probability}
+\textbf{Probability space ($\Omega, F, P$):}
+Set of atomic events $\Omega$.
+Set of all non-atomic events ($\sigma$-Algebra): $F \in 2^{\Omega}$.
+Probability measure: $P: F \rightarrow [0,1]$\\
+\textbf{Bayes' rule}: $P(B|A)= P(A,B)/P(A)=P(A|B)P(B)/P(A)$, where $P(A)=\sum_bP(A|B)P(A)$
+\textbf{Union:} $P(A\cup B)=P(A)+P(B)-P(A\cap B)$
+
+% \textbf{Probability axioms:}\\
+% Normalization\\
+% Non-negativity\\
+% $\sigma$-additivity
+
+\textbf{Rules for joint distributions:}\\
+Sum rule (Marginalization):\\
+    $P(X_{1:i-1}, X_{i+1:n})=\sum_{x_i}P(X_{1:i-1}, X_i=x_i, X_{i+1:n})$
+Product rule (Chain rule):\\
+    $P(X_{1:n})=P(x_1)P(X_2|X_1)...P(X_n|X_{1:n-1})$
+
+\textbf{Conditional Independence:}\\
+$X\perp Y | Z $ iff $P(X,Y|Z)=P(X|Z)P(Y|Z)$\\
+If $P(Y|Z)>0 \Rightarrow P(X|Z,Y)=P(X|Z)$ 
+
+\textbf{Properties of Conditional Independence:}\\
+Symmetry: $X \perp Y$ | $Z \Rightarrow Y \perp X$ | $Z$\\
+Decomposition: $X \perp (Y,W)$ | $Z \Rightarrow X \perp Y$ | $Z$\\
+Contraction: $(X \perp Y$ | $Z) \wedge (X \perp W$ | $Y, Z) \Rightarrow X \perp Y, W$ | $Z$\\
+Weak union: $X \perp Y,W$ | $Z \Rightarrow X \perp Y$ | $Z, W$\\
+Intersection: $(X \perp Y$ | $W, Z) \wedge (X \perp W$ | $Y, Z) \Rightarrow X \perp Y, W$ | $Z$

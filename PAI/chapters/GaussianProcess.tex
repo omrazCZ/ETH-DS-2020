@@ -1,0 +1,45 @@
+% -*- root: Main.tex -*-
+\section{Gaussian Processes}
+$f\sim GP(\mu,k)\Rightarrow\forall \left\{x_1, \dots, x_n\right\} \,\forall n < \infty$\\
+$\left[f(x_1)\dots f(x_n)\right]\sim N(\left[\mu(x_1)\dots \mu(x_n)\right], K)$\\ where $K_{ij}=k(x_i,x_j)$
+% A GP $\{X_t\}_t$ is a collection of random variables from which any finite sample has a joint Gaussian distribution.\\
+% For any finite set of points $T=\{t_1, \dots, t_n\}$ from a GP, it hold that $(X_{t_1}, \dots,X_{t_n})\sim \mathcal{N}(\pmb{\mu_T},\pmb{\Sigma_T})$ with $\pmb{\mu_T} = (\mu(t_1),\dots,\mu(t_n))$, $\pmb{\Sigma_T}(i,j)=k(X_{t_i},X_{t_j})$
+\subsection{Gaussian Process Regression}
+$f\sim GP(\mu,k)$ then: $f\vert y_{1:n},x_{1:n} \sim GP(\tilde{\mu},\tilde{k})$\\
+$\tilde{\mu}(x) = \mu(x) + K_{A, x}^T{(K_{AA}+\epsilon I_n)}^{-1}\left(y_A-\mu_A\right)$\\
+$\tilde{k}(x,x') = k(x,x') - K_{A,x}^T{(K_{AA}+\epsilon I_n)}^{-1} K_{A,x'}$\\
+Where: $K_{A,x} = {\left[k(x_1,x)\dots k(x_n,x)\right]}^T$\\
+${\left[K_{AA}\right]}_{ij} = k(x_i, x_j)$ and $\mu_A = {\left[\mu(x_1 \dots x_n)\right]}^T$\\
+
+
+\subsection{Kernels}
+	$k(x,y)$ is a kernel if it's symmetric semidefinite positive:\\
+	$\forall \left\{x_1, \dots, x_n \right\}$ then for the Gram Matrix \\
+	${\left[K\right]}_{ij}=k(x_i,x_j)$ holds $c^TKc\geq0\forall c$\\
+    \textbf{Some Kernels:} (h is the bandwidth hyperp.)\\
+    Gaussian (rbf): $k(x,y) = \exp( -\tfrac{||x-y||^2}{h^2})$\\
+    Exponential: $k(x,y) = \exp( -\tfrac{||x-y||}{h})$\\
+    Linear kernel: $k(x,y) = x^Ty$ (here $K_{AA} = XX^T$)\\
+\subsection{Optimization of Kernel Parameters}
+Given a dataset $A$, a kernel function $k(x,y;\theta)$. $y\sim N(0, K_y(\theta))$ where $K_y(\theta)=K_{AA}(\theta)+\sigma_n^2I$\\
+$\hat\theta = \argmax_\theta \log p(y\vert X;\theta)$\\ 
+In GP: $\hat\theta=\argmin_\theta y^TK_{y}^{-1}(\theta)y + \log\vert K_y(\theta)\vert$\\
+We can from here $\nabla\downarrow$:\\
+$\nabla_\theta \log p(y\vert X;\theta) = ${\scriptsize$\frac{1}{2}tr\left(\left(\alpha\alpha^T-K^{-1}\right)\frac{\partial K}{\partial \theta}\right)$, $\alpha = K^{-1}y$}\\
+Or we could also be baysian about $\theta$
+\subsection{Aproximation Techniques}
+\textbf{Local method:} $k(x_1,x_2)= 0$ if $||x_1-x_2||>\!\!>1$\\
+
+\textbf{Random Fourier Features:} if $k(x,y)=\kappa(x-y)$\\
+$p(w)=\mathcal{F}\left\{\kappa(\cdot), w\right\}$. Then $p(w)$ can be normalized to be a density.\\
+$\kappa(x-y) = \mathbb{E}_{p(w)}\left[\exp{\left\{iw^T(x-y)\right\}}\right]$ {\scriptsize antitransform}\\
+$\kappa(x-y) = \mathbb{E}_{b\sim \mathcal{U}(\left[0, 2\pi\right]), w\sim p(w)}\left[z_{w,b}(x)z_{w,b}(y)\right]$\\
+where $z_{w,b}(x)=\sqrt{2}cos(w^Tx+b)$. I can MC extract features $z$. If \# features is $<\!\!<$ n then this is faster ($X^TX$ vs $XX^T$)\\
+
+\textbf{Inducing points:} We a vector of inducing variables $u$\\
+$f_A\vert_u \sim N(K_{Au}K_uu^{-1}u, \begingroup\color{magenta}K_{AA}-K_{Au}K_uu^{-1}K_{uA} \endgroup)$\\
+$f_*\vert_u \sim N(K_{*u}K_uu^{-1}u, \begingroup\color{magenta}K_{**}-K_{*u}K_uu^{-1}K_{u*} \endgroup)$\\
+
+\textbf{Subset of Regressors (SoR):} $\begingroup\color{magenta}\blacksquare\endgroup  \to 0$\\
+\textbf{FITC:} $\begingroup\color{magenta}\blacksquare\endgroup  \to$ its diagonal
+ 

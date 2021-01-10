@@ -1,0 +1,139 @@
+
+\section{Approximate inference}
+
+
+\subsection{Laplace Approximation}
+$\hat\theta=\argmax_\theta p(\theta\vert y)$\\
+$\Lambda = -\nabla_\theta \nabla_\theta \log{p(\theta\vert y)}\vert_{\theta = \hat\theta}$\\
+$p(\theta\vert y)\simeq q(\theta)=N(\hat\theta,\Lambda^{-1})$
+
+
+\subsection{Variationa Inverence}
+$\hat q = \argmin_{q \in Q} KL(q\vert\vert p(\cdot\vert y))$\\
+$\hat q = ELBO$ Evidence Lower Bound\\
+$ELBO \doteq \mathbb{E}_{\theta \sim q}\left[\log{p(y\vert\theta)}\right]-KL(q\vert\vert p(\cdot)) \leq \log{p(y)}$
+
+
+\subsection{Markov Chain Monte Carlo}
+\textbf{Idea}: All we need is sampling from postirior
+
+\textbf{Ergodic Markov Chain}: \\
+$\exists t \text{ s.t. } \mathbb{P}(i \to j \text{ in t steps})>0\;\; \forall i,j \Rightarrow\\
+ \exists! \pi = \lim_{N\to \infty} \mathbb{P}(X_n=x)$ Limit distribution\\
+
+ \textbf{Ergodic Theorem}: if $(X_i)_{i\in\mathbb{N}}$ is ergodic:\\
+$\ \lim_{N\to \infty}\frac{1}{n}\sum_{i=1}^{N}f(X_i)=\mathbb{E}_{x\sim\pi}\left[f(x)\right]$\\
+
+\textbf{Detailed Blanced Equation}:\\
+$P(x\vert x')$ is the transition model of a MC:\\
+if $R(x)P(x'\vert x) = R(x')P(x\vert x')$ then $R$ is the limit distribution of the MC \\
+
+\textbf{Metropolis Hastings Algo}: Sample from a MC which has $P(x) = \frac{Q(x)}{Z}$ as limit dist.\\
+\begin{algorithm}[H]
+    \SetKwFor{kwWith}{with}{do}{}
+    \SetKwInput{kwInit}{init}
+    \KwResult{$\left\{X_i\right\}_{i\in\mathbb{N}}$ sampled from the MC}
+    \kwInit{ $R(x\vert x')$ }
+    \tcc{Good $R$ choice $\to$ fast convergence} 
+    \kwInit{ $X_0 = x_0$ }
+    \For{$t \gets 1, 2, \dots$}{
+        $x' \sim R(\cdot, x_{t-1})$\\
+        $\alpha = \min\left\{1;\frac{Q(x')R(x_{t-1}\vert x')}{Q(x_{t-1})R(x'\vert x_{t-1})}\right\}$\\
+        \kwWith{probability  $\alpha$}
+        {
+            $X_{t} = x'$\;
+        }
+        otherwise $X_{t} = x_{t-1}$\;
+     }
+ \end{algorithm}
+\textbf{Metropolis Adj. Langevin Algo (MALA)}:\\
+Energy function: $P(x)=\frac{Q(x)}{Z}=\frac{1}{Z}\exp{(-f(x))}$\\
+We chose: $R(x\vert x') = \mathcal{N}(x' - \tau \nabla f(x), 2\tau I)$\\
+\textbf{Stoch. Grad. Langevin Dynamics (SGLD)}:\\
+We use SGD to Approximate $\nabla f$. Converges also without acceptance step \\
+\textbf{Hamilton MC}: SGD performance improoved by adding momentum (consider last step $\nabla f$)
+\textbf{Gibbs sampling}: Practical when $X\in\mathbb{R}^n$\\
+Used when $P(X_{1:n})$ is hard but $P(X_i\vert X_{-i})$ is easy.
+\begin{algorithm}[H]
+    \SetKwInput{kwInit}{init}
+    \SetKwFor{kwWith}{with}{do}{}
+    \kwInit{$x_0 \in \mathbb{R}^n;\; (x_0^{(B)} = x^{(B)})$ B is our data}
+    \For {$t = 1,2,\dots$}
+    {
+        $x_t = x_{t-1}$\\
+
+        \kwWith{ $i \sim \mathcal{U}(\left\{1:n\right\}\setminus B)*$}{
+        $x_{t-1}^{(i)}\sim P(x^{(i)}\vert x^{(-i)})$
+        }
+    }
+\end{algorithm}
+$*$ if we do it $\forall i \notin B$ no DBE but more practical
+
+
+\subsection{Variable elimination for MPE (most probable explanation):}
+With loopy graphs, BP is often \textbf{overconfident/oscillates}.
+
+\iffalse
+- Given BN and evidence E=e\\
+- Choose an ordering of $X_1, ... x_n$\\
+- Set up initial factors $f_i=P(X_i|Pa_i)$\\
+- For $i=1:n, X_i \notin  E$:\\
+$\quad$ - Collect and multiply all factors $f_j$ that include $X_i$\\
+$\quad$ - Generate new factor by maximizing out $X_i$:
+        $g_i=\underset{w=x_i}{\operatorname{max}}\prod_j f_j$\\
+$\quad$ - Add $g$ to set of factors\\
+- For $i=n-1:1, X_i\notin E$:
+    $\hat{x}_i=\underset{x_i}{\operatorname{argmax}}g_i(x_i, \hat{x}_{i+1:n})$
+
+\textbf{Retrieving MAP from Max-Product (MAP = MPE for a subset of RVs):}\\
+- Define max-marginals:\\
+    $P_{max}(X_v=x_v):=\underset{x\sim x_v}{\operatorname{max}}P(x)$\\
+- For tree factor graphs, max-product computes max-marginals:\\
+    $P_{max}(X_v=x_v)	\propto \prod_{u \in N(v)} \mu_{u \rightarrow v}(x_v)$\\
+- Can retrieve MAP solution from these (must be careful when ties need to be broken).
+
+
+\subsection{Sampling based inference: compute marginals as expectations}
+\textbf{Hoeffding's inequality:} Suppose $f$ is bounded in $[0, C]$. Then:\\
+$P(|E_P[f(X)]-\frac{1}{N}\sum_{i=1}^N f(x_i)|\geq\epsilon) \leq 2exp\big( \frac{-2N\epsilon^2}{C^2}\big)$
+
+\textbf{Monte Carlo Sampling from a BN:}\\
+- Sort variables in topological ordering $X_1, X_n$\\
+- For $i=1$ to $n$, sample:\\
+$x_i \sim P(X_1=x_1, ..., X_{i-1}=x_{i-1})$
+
+\textbf{Rejection Sampling}:\\
+- Collect samples over all variables:\\
+    $\hat{P}(X_A =x+A | X_B=x_B)=\frac{Count(x_A, x_B)}{Count(x_B)}$\\
+- Throw away samples that disagree with $x_B$\\
+- Count fraction of $x_a$ on remaining samples
+
+
+\subsubsection{Directly sampling from the posterior: MCMC}
+\textbf{Markov Chain:}: A (stationary) MC is a sequence of RVs $X_1, ..., X_N$, with prior $P(X_1)$ and transition probabilities $P(X_{t+1}|X_t)$ independent of t.\\
+\textbf{Markov assumpt.:} $X_{1:t-1}\perp X_{t+1:T}|X_t$, $\forall t>1$\\
+\textbf{Stationarity assumption:}\\
+$P(X_{t+1}=x|X_t=x')=P(X_{t}=x|X_{t-1}=x')$, $\forall t>1$\\
+\textbf{If ergodic} (= there exists a finite t such that every state can be reached in exactly t steps), then: it has a unique and positive stationary distribution $\pi(X)>0$, such for all $x$:\\
+            $\underset{N\rightarrow\infty}{lim}P(X_N=x)=\pi(x)$ and $\pi(X)\perp P(X_1)$.\\
+If MC satisfies the \textbf{detailed balance equation} (for unnormalized distribution $Q$, for all $x,x'$: $Q(x)P(x'|x)=Q(x')P(x|x')$), then the MC has stationarity distribution $\pi(X)=1/ZQ(X)$.
+
+\textbf{Designing Markov Chains:}\\
+- Proposal distribution $R(X'|X)$: given $X_t=x$, sample "proposal" $x'\sim R(X'|X=x)$\\
+- Acceptance distribution\\
+$\quad$ - Suppose $X_t=x$\\
+$\quad$ - With probability $\alpha=min \Big\{1, \frac{Q(x')R(x|x')}{Q(x)R(x'|x)}\Big\}$
+        set: $X_{t+1}=x'$\\
+$\quad$ - With probability $1-\alpha$, set $X_{t+1}=x$\\
+
+\textbf{MCMC for graphical models: Gibbs sampling (Random Vs \hl{Practical variant}):}\\
+- Start with initial assignment $x$ to all variables\\
+- Fix observed variables $X_B=x_B$\\
+- For $t=1$ to $\infty$, do:\\
+$\quad$ - Pick a variable $i$ uniformly at random from $\{1,...,n\}\setminus B$ \hl{/ Set ordering}, and then, for each $X_i$ (except those in $B$)\\
+$\quad$ - Set $v_i=$ values of all $x$ except $x_i$\\
+$\quad$ - Sample $x_i$ from $P(X_i|v_i)$
+\fi
+
+
+

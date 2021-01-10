@@ -1,0 +1,28 @@
+\section{Learning models from training data}
+\subsection{Learning from i.i.d data}
+\textbf{Algorithm for Bayes Net MLE}:\\
+Given BN of structure G and dataset D of complete observations\\
+For each $X_i$ estimate:
+$\hat{\theta}_{X_i|Pa_i}=\frac{Count(X_i, Pa_i)}{Count(Pa_i)}$\\
+Pseudo-counts for lime and cherry flavor: $\theta_{F=c}\frac{Count(F=c)+\alpha_c}{N+\alpha_c + \alpha_l}$
+
+\subsubsection{Score based structure learning}
+Define scoring function $S(G;D)$ and search over BN structure G: $G^*=\underset{G}{argmax}S(G;D)$\\
+\textbf{Examples of scores:\\
+MLE Score}:\\
+$log P(D|\theta_G, G) = N \sum_{i=1}^n \hat{I}(X_i;Pa_i) + const.$\\
+\textbf{Where mutual information} ($I(X_i, X_j)\geq 0$) is:\\
+$I(X_i, X_j)=\sum_{x_i, x_j}P(x_i, x_j)log\frac{P(x_i, x_j)}{P(x_i)P(x_j)}$ \\
+\textbf{Empirical mutual information:}\\
+$\hat{P}(x_i,x_j)=\frac{Count(x_i, x_j)}{N}$\\
+$\hat{I}(X_i, X_j)= \sum_{x_i, x_j}\hat{P}(x_i, x_j)log\frac{\hat{P}(x_i, x_j)}{\hat{P}(x_i)\hat{P}(x_j)}$\\
+\textbf{Regularizing a Bayes Net:}\\
+$S_{BIC}(G) = \sum_{i=1}^n \hat{I}(X_i;Pa_i) - \frac{log N}{2N}|G|$ \\
+where $G$ is the number of parameters, $n$ the number of variables and $N$ the number of training examples.\\
+\textbf{Chow-Liu algorithm:}\\
+- For each pair $X_i, X_j$ of variables, compute: $\hat{P}(x_i,x_j)=\frac{Count(x_i, x_j)}{N}$\\
+- Compute mutual information\\
+- Define complete graph with weight of edge $(X_i, X_j)$ given by the mutual information\\
+- Find max spanning tree $\rightarrow$ undirected tree\\
+- Pick any variable as root and orient the edges away using breadth-first search.\\
+

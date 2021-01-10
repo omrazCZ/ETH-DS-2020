@@ -1,0 +1,16 @@
+\section{Bayesian Optimization}
+Like Active Learning but we only want to find the optima. 
+We pick $x_1, x_2, \dots$ from $\mathcal{D}$ and observe $y_i = f(x_t)+\epsilon_t$.\\
+\textbf{Comulative regret:}$R_T=\sum\limits_{t=1}^T\left(\max_{x\in\mathcal{D}f(x) - f(x_t)}\right)$
+\textbf{Oss:}$\frac{R_T}{T}\to 0 \Rightarrow \max_{t}f(x_t)\to \max_{x\in\mathcal{D}} f(x)$
+
+\subsection{Upper Confidence Sampling}
+With GP $x_t = \argmax_{x\in \mathcal{D}} \mu_{t-1}(x) + \beta_t \sigma_{t-1}(x)$\\
+Chosing the correct $\beta_t$ we get: $\frac{R_T}{T}=\mathcal{O}\left(\sqrt{\frac{\gamma_T}{T}}\right)$.
+Where $\gamma_t = \max_{|\mathcal{S}|<T}I(f;y_\mathcal{S})$. On d dims:\\
+{\scriptsize Linear}: $\gamma_T=\mathcal{O}(d\log T)$ {\scriptsize RBF}: $\gamma_T=\mathcal{O}((log T)^{d+1})$\\
+\textbf{Optimal $\beta_t$} $=\mathcal{O}(\left\lVert f\right\rVert_K^2+\gamma_t \log^3T )$\\
+\textbf{Oss:} $\beta \uparrow = $more exploration
+\subsection{Thompson Samling}
+$x_t = \argmax_{x\in\mathcal{D}}\tilde{f}(x),\;\;\tilde{f}\sim p(f\vert x_{1:n}, y_{1:n})$
+

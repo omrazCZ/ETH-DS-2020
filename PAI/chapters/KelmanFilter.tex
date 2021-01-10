@@ -1,0 +1,11 @@
+\section{Kalman Filter}
+\(
+\begin{cases}
+    X_{t+1} = FX_t + \epsilon_t & \epsilon_t\sim N(0,\Sigma_x)\\
+    Y_t=HX_t+\eta_t & \eta_t \sim N(0,\Sigma_y)\\
+\end{cases} {X_1\sim N(\mu_p, \Sigma_p)}
+\)
+Then if $X_0$ is Gaussian then $X_{t}\vert Y_{1:t} \sim N(\mu_t, \sigma_t)$:\\
+$\mu_{t+1} =F\mu_t+K_{t+1}(y_{t+1}-HF\mu_t)$\\
+$\Sigma_{t+1}=(I-K_{t+1}H)(F\Sigma_tF^T+\Sigma_x)$\\
+$K_{t+1} = ${\scriptsize $(F\Sigma_tF^T +\Sigma_x)H^T{(H(F\Sigma_tF^T+\Sigma_x)H^T+\Sigma_y)}^{-1}$}

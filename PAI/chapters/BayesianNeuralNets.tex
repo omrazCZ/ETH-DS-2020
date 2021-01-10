@@ -1,0 +1,42 @@
+\section{Bayesian Neural Nets}
+Likelihood: $p(y\vert x;\theta) = \mathcal{N}(f_1(x,\theta), \exp{(f_2(x,\theta))})$\\
+Prior: $p(\theta) = \mathcal{N}(0, \sigma_p^2)$\\
+$\theta_{MAP} = \argmax \log{(p(y, \theta))}$
+
+\subsection{Variation inference:} Usually we use $Q =$ Set of Gaussians\\
+ $\hat q =  \argmax ELBO$ {\scriptsize Reparameterization trick}\\
+$q$ approx. the posterior but how to predict?\\
+$p(y^*\vert x^*, \mathcal{D})\simeq \frac{1}{m}\sum_{j=1}^m p(y^*\vert x^*, \theta^{(i)}),\;\theta \sim \hat q(\theta)$ \\
+Gaussian Mixture distribution:
+$\mathbb{V}(y^*\vert x^*,\mathcal{D}) \simeq \\
+\simeq \begingroup\color{magenta}\frac{1}{m}\sum_{j=1}^m \sigma^2(x^*, \theta^{(i)})\endgroup + \begingroup\color{blue}\frac{1}{m}\sum_{j=1}^m\left(\mu(x^*,\theta^{(j)}-\bar\mu(x^*))\right)\endgroup$\\
+$\begingroup\color{magenta}\blacksquare\endgroup \to $Aletoric,
+$\begingroup\color{blue}\blacksquare\endgroup \to $Epistemic\\
+
+\textbf{Dropouts Regularization}: Random ignore nodes in SGD iteration: 
+Equavalent to VI with $Q = \left\{q(\cdot\vert \lambda) = \prod_j q_j(\theta_j\vert \lambda), \; \lambda \in \mathbb{R}^d \right\}$\\
+where $q_j(\theta_j\vert \lambda) = p\delta_0(\theta_j) +  (1-p)\delta_{\lambda_j}(\theta_j)$\\
+This allows to do Dropouts also in prediction
+
+\subsection{MCMC:} MCMC but cannot store all the $\theta^{(i)}$:\\
+1) Subsampling: Only store a subset of the  $\theta^{(i)}$\\
+2) Gaussian Aproximation: We only keep:\\
+$\mu_i=\frac{1}{T}\sum_{j=1}^T \theta_i^{(j)}$ and $\sigma_i=\frac{1}{T}\sum_{j=1}^T (\theta_i^{(j)}-\mu_i)^2$\\
+And updete them online. 
+
+\textbf{Predictive Esnable NNs}: \\
+Let $\mathcal{D} = \left\{(x_i,y_i)\right\}_{i=1:n}$ be our dataset. \\
+Train $\theta_i^{MAP}$ on $\mathcal{D}_i$ with $ i=1,\dots,m$\\
+$\mathcal{D}_i$ is a Bootstrap of $\mathcal{D}$ of same size\\
+and $p(y^*\vert x^*, \mathcal{D})\simeq \frac{1}{m}\sum_{j=1}^m p(y^*\vert x^*, \theta^{MAP}_i)$ 
+
+
+\subsection{Model calibration}
+Train $\hat q$ on $\mathcal{D}_{train}$ \\
+Evaluate $\hat q$ on $\mathcal{D}_{val}= \left\{(y',x')\right\}_{i=1:m}$\\
+Held-Out-Likelihood $\doteq \log{p(y'_{1:m} \vert x'_{1:m} , \mathcal{D}_{train})}$ \\
+$\geq \mathbb{E}_{\theta \sim \hat q}\left[\sum_{i=1}^m\log{p(y_i'\vert x_i', \theta)}\right]$ (Jensen)\\
+$\simeq \frac{1}{k}\sum_{j=1}^k\sum_{i=1}^m\log{p(y_i'\vert x_i', \theta^{(j)})}, \;\; \theta^{(j)} \sim \hat q$
+
+\textbf{Evaluate predicted accuracy}: We divide $\mathcal{D}_{val}$ into bins according to predicted confidence values. In each bin we compare accuracy with confidence
+
