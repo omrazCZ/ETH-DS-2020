@@ -1,4 +1,11 @@
 \section{Review of useful concepts and Introduction}
+
+\subsection{Usefull math}
+$\varphi$ is convex $\Rightarrow \varphi(\mathbb{E}[X]) \leq  \mathbb{E}[\varphi(X)]$\\
+\textbf{Hoeffding}: $Z_1,\dots iid, Z_i\in [0,C], \mathbb{E}[Z_i]=\mu$\\
+$\Rightarrow P\left(\left\lvert \mu - \frac{1}{n}\sum_{i=1}^n Z_i\right\rvert > \epsilon \right)\leq 2 \exp(-2n\frac{\epsilon^2}{C})\leq \delta$\\
+$\Rightarrow n \geq \frac{C}{2\epsilon^2}\log\frac{2}{\delta}$\\
+\textbf{Robbins Monro} $\alpha_t \xrightarrow{RM} 0$: $\sum \alpha_t = \infty, \sum \alpha_t^2 < \infty$ 
 \subsection{Multivariate Gaussian}
 %$\sigma =$ covariance matrix, $\mu$ = mean\\
 $f(x) = \frac{1}{2\pi \sqrt{|\Sigma|}} e^{- \frac{1}{2} (x-\mu)^T \Sigma^{-1} (x-\mu)}$
@@ -23,10 +30,8 @@ Suppose we have a Gaussian random vector
     \Sigma_{AA}-\Sigma_{AB}\Sigma^{-1}_{BB}\Sigma_{BA}
 \right)
 \)
-\subsection{Convex / Jensen's inequality}
-$\text{g(x) is convex} \Leftrightarrow x_1,x_2 \in \mathbb{R}, \lambda \in [0,1]: g''(x) > 0$\\
-$g(\lambda x_1 + (1-\lambda) x_2) \leq \lambda g(x_1) + (1-\lambda) g(x_2)$
-$\varphi(\operatorname{E}[X]) \leq  \operatorname{E}[\varphi(X)]$
+
+
 \subsection{Information Theory elements:}
 \textbf{Entropy:} $H(X)\doteq -\mathbb{E}_{x\sim p_X}\left[\log{p_X(x)}\right]$\\
 $H(X\vert Y)\doteq -\mathbb{E}_{(x,y)\sim p_{(X,Y)}}\left[\log{p_{Y\vert X}(y\vert x)}\right]$\\

@@ -1,55 +1,85 @@
-\section{Reinforcement Learning}
+\section{Non Parametric RL}
 It is an MDP with unknown $p(x'\vert x,a)$ and $r(x,a)$
+
 \subsection{Model-based RL}
+From all steps $X_{t+1},R_t \vert X_{t}, A_{t}$ we can learn:\\
+$p(x'\vert x,a)\simeq \hat{p}_{x'\vert x, a} = \frac{Count(X_{t+1}=x',\; X_t=x,\;A_t =a)}{Count(X_t=x,\; A_t = a)}$\\
+$r(x,a)\simeq \hat{r}_{x,a}= \frac{1}{Count(X_t=x,\; A_t=a)}\sum_{t|X_t=x,\; A_t=a}R_t$\\
+How to chose $a_t$?
 
-\subsubsection{$\epsilon$ greedy}
-With probability $\epsilon$, pick random action. With prob $(1-\epsilon)$, pick best action. If sequence $\epsilon$ satisfies Robbins Monro criteria $\rightarrow$ convergence to optimal policy with prob 1.
+\subsubsection{$\epsilon$-greedy (On-Policy)}
+With probability $\epsilon$, pick random action.\\
+With probability $1-\epsilon$, pick $a = \argmax Q(x,a)$.\\
+\textbf{Oss:} $Q$ is caclulated from $(\hat{p}, \hat{r})$\\
+\textbf{Th:} If $\epsilon_t\xrightarrow{RM}0$ then $(\hat{r},\hat{p})\xrightarrow{a.s.}(r,p)$
 
-\subsubsection{$R_{max}$ algorithm}
-\textbf{Input}: starting $x_0$, discount factor $\gamma$.\\
-\textbf{Initially}: add fairy tale state $x^*$ to MDP\\
-- Set $r(x,a)=R_{max}$ for all states x and actions $a$\\
-- Set $P(x^*|x,a)=1$ for all states $x$ and actions $a$\\
-- Choose the optimal policy for $r$ and $P$\\
-\textbf{Repeat}:
-1. Execute policy $\pi$ and, for each visited state/action pair, update $r(x,a)$\\
-2. Estimate transition probabilities $P(x^{'}|x,a)$\\
-3. If observed 'enough' transitions/rewards, recompute policy $\pi$, according to current model $P$ and $r$.\\
-\textbf{"Enough"?} See Hoeffding's inequality. To reduce error $\epsilon$, need more samples $N$.\\
-\textbf{Theorem}: With probability $1-\delta$, $R_{max}$ will reach an $\epsilon$-optimal policy in a number of steps that is polynomial in $|X|, |A|, T, 1/\epsilon$ and $log(1/\delta)$. Memory $O(|X^2||A|)$. 
+\subsubsection{Softmax (On-Policy)}
+Draw $a \sim q(a\vert x) = \text{softmax}\frac{Q(x,a)}{\tau}$\\
+If $\tau \uparrow $ it means I trust less $Q$
 
-\subsection{Model-free RL: estimate V*(x) directly}
-\subsubsection{Q-learning}
-$Q(x,a) \leftarrow (1-\alpha_t)Q(x,a) + \alpha_t(r+\gamma \max_{a'}Q(x', a'))$\\
+\subsubsection{$R_{max}$ algorithm (On-Policy)}
+We add a fairy state $x^*$\\
+\begin{algorithm}[H]
+    \SetKwInput{kwInit}{init}
+    \kwInit{$r(x,a) = R_{max} \; \forall x\in \mathcal{X}\cup \left\{x^*\right\},a\in\mathcal{A}$}
+    \kwInit{$p(x^*\vert x, a) = 1 \; \forall x\in \mathcal{X},a\in\mathcal{A}$}
+    \kwInit{$\pi = $ optimal policy w.r.t. $p$, $r$}
+    \Repeat{}{  
+        Execute $\pi$ and get $x_{t+1}$ and $r_t$\\
+        Update belief of $r(x_t,\pi(x_t))$ and $p(x_{t+1}\vert x_t,\pi(x_t))$\\
+        If obeserved 'enough' in $(x,a)$ recompute $\pi$ using the updated belief only in $(x,a)$
+    }
+\end{algorithm}
+\textbf{'Enough'?} See Hoeffding's inequality \\
+($\hat{p}\in [0, 1],\; \hat{r}\in [0, R_{max}]$).\\
+\textbf{PAC bound:} With probability $1-\delta$, $R_{max}$ will reach an $\epsilon$-optimal policy in a number of steps that is polynomial in $|X|, |A|, T, 1/\epsilon$ and $log(1/\delta)$. Memory $O(|X|^2|A|)$. 
+
+\subsection{Model-free RL}
+Learn $\pi^*$ only via $V^*$ or $Q^{V^*}$
+
+\subsubsection{TD-learning (On-Policy)}
+Given a policy $\pi$ we want to learn $V^\pi$\\
+$V^\pi(x)=\mathbb{E}_{R\sim r(x,\pi(x)), X'\sim p(\cdot\vert x, \pi(x))}\left[R + \gamma V^\pi(X')\right]$\\
+After seeing $(x_{t+1}, r_t \vert x_t, \pi(x_t))$ we update: \\
+$V_{t+1}(x_t)\gets (1-\alpha_t)V_{t}(x_t) + \alpha_t(r_t + \gamma V_t^\pi(x_{t+1}))$\\
+Where $\alpha_t$ is a regulizer term (only 1 samlple)
+\textbf{Th:} If $\alpha_t\xrightarrow{RM}0$ then $V\xrightarrow{a.s.}V^\pi$
+
+\subsubsection{Q-learning (Off Policy)}
+Given experience we want to learn $Q^* = Q^{V^*}$\\
+$Q^*(x,a) = \mathbb{E}_{\substack{R\sim r(x,\pi(x)) \\ X'\sim p(\cdot\vert x, \pi(x))}}\left[R+\gamma \max_{a'} Q^*(X',a')\right]$\\
+After seeing $(x_{t+1}, r_t \vert x_t, a_t)$ we update: \\
+$Q(x_t,a_t) ${\scriptsize $\gets (1-\alpha_t)Q(x_t,a_t) + \alpha_t(r_t+\gamma \max_{a'}Q(x_{t+1}, a'))$}\\
 % $V^*(x)=\underset{a}{max}Q*(x,a)$\\
-\textbf{Theorem}: If learning rate $\alpha_t$ satisfies: $\sum_t \alpha_t=\infty$ and $\sum_t \alpha_t^2 < \infty$ (Robbins-Monro), and actions are chosen at random, then $Q$ learning converges to optimal $Q^*$ with probability 1.\\
+\textbf{Th:} If $\alpha_t\xrightarrow{RM}0$ then $Q\xrightarrow{a.s.}Q^{*}$\\
 \textbf{Optimistic Q learning:}\\
 Initialize: $Q(x,a)=\frac{R_{max}}{1-\gamma}\prod_{t=1}^{T_{init}}(1-\alpha_t)^{-1}$\\
-Same convergence time as with $R_{max}$. Memory $O(|X||A|)$. Comp: $O(|A|)$.\\
-\textbf{Parametric Q-function approximation}: $Q(x,a;\theta)=\theta^T\phi (x,a)$ to scale to large state spaces. (You can use Deep NN here!)\\
-\textbf{SGD for ANNs}: initialize weights. For t = 1,2..., pick a data point (x,y) uniformly at random. Take step in negative gradient direction. (In practise, mini-batches).\\
-\textbf{Deep Q Networks}: use CNN to approx Q function.
-% Use "experience relay". Clone network to maintain constant "target" values across episodes:
-$ L(\theta)=\sum_{(x,a,r,x')\in D}(r+\gamma\underset{a'}{max}Q(x',a';\theta^{old})-Q(x,a;\theta))^2$ \textbf{Double DQN:} current network for evaluating argmax (too optimistic, and you remove $\theta^{old}$ and put $\theta$).
+Same convergence time as with $R_{max}$. Memory $O(|X||A|)$. Comp: $O(|A|)$.
 
-\subsection{Gaussian processes}
-A GP is an (infinite) set of random variables (RV), indexed by some set X, i.e., for each x in X, there is a RV $Y_x$ where there exists functions $\mu : X \rightarrow \mathbb{R}$ and $K: X \times X \rightarrow \mathbb{R}$ such that for all: $A \in X, \quad A={x_1,...x_k}$, it holds that $Y_A=[Y_{x_1},...,Y_{x_k}] \sim N(\mu_a, \Sigma_{AA})$, where: $\Sigma_{AA} =$ matrix with all combinations of $K(x_i, x_j)$.
-% \[ 
-% \left (
-%   \begin{tabular}{cccc}
-%   K(x_1,x_1) & K(x_1,x_2) & \cdots & K(x_1,x_n) \\
-%   \vdots &  &  & \vdots \\
-%   K(x_k,x_1) & K(x_k,x_2) & \cdots &K(x_k,x_k)
-%   \end{tabular}
-% \right )
-% \]
+\section{Parametric RL}
+\subsection{Parametric TD-learning}
+\subsubsection{TD-learinging as SGD}
+TD-learing = 1 sample ($x', r \vert x, \pi(x)$) SGD on:\\
+$\bar{l}_2(V;x,r) = \frac{1}{2}\left(V-r-\gamma\mathbb{E}_{x'\sim p(\cdot\vert x, \pi(x))}\left[\hat{V}^\pi(x')\right]\right)^2$\\
+1 sample estimate of $\nabla_V \bar{l}_2 = \delta = V-r-\gamma \hat{V}^\pi(x')$\\
+$\Rightarrow V\gets V - \alpha_t \delta$ where $V = \hat{V}^\pi(x)$
 
-% $\mu_A =$\begin{pmatrix}\mu(x_1)\\\mu(x_2)\\\vdots\\\mu(x_k}\end{pmatrix}
-K is called kernel (covariance) function (must be symmetric and pd) and $\mu$ is called mean function.
-\textbf{Making prediction with GPs:} Suppose $P(f)=GP(f;\mu, K)$ and we observe $y_i=f(\overrightarrow{x_i})+\epsilon_i$, $A=\{\overrightarrow{x_1}:\overrightarrow{x_k}\}$
-$P(f(x)|\overrightarrow{x_1}:\overrightarrow{x_k},y_{1:k})=GP(f;\mu ', K')$.  In particular, $P(f(x)|\overrightarrow{x_1}:\overrightarrow{x_k},y_{1:k})=N()f(x);\mu_{x|A}, \sigma^2_{x|a}$, where $\mu_{x|a}=\mu(\overrightarrow{x})+\Sigma_{x,A}(\Sigma_{AA}+\sigma^2I)^{-1}\Sigma^T_{x,A}(\overrightarrow{y_A}-\mu_A)$ and $\sigma^2_{x|a}=K(\overrightarrow{x},\overrightarrow{x})-\Sigma_{x,A}(\Sigma_{AA}+\sigma^2I)^{-1}\Sigma^T_{x,A}$. \textbf{Closed form formulas for prediction!}
+\subsubsection{TD-parametric}
+If $\hat{V}^\pi(x) = V(x,\theta)$ then: \\
+$\delta = \left[ V(x;\theta)-r-\gamma V(x';\theta_{old})\right] \nabla_\theta V(x,\theta)$
 
+\subsection{Parametric Q-learining}
+$\delta (\theta, \theta_{old}) = \left(Q(x,a;\theta)-r-\gamma\max_{a'} Q(x',a';\theta_{old})\right)$\\
+We don't differiantiate with regard to $\theta_{old}$\\
+The SGD step is:
+$\theta \gets \theta - \alpha_t \delta(\theta, \theta) \nabla_\theta Q(x,a;\theta)$
 
+\textbf{Deep Q Networks (DQN):} Version of Q-learning where we update $Q$ only each batch:\\
+{\scriptsize $L(\theta) = \sum_{(x,a,r,x')\in\mathcal{D}}\left(r+\gamma\max_{a'}Q(x',a';\theta_{old})-Q(x,a;\theta)\right)^2$}
+\textbf{Double DQN (better):} \\
+{\scriptsize $L(\theta) = \sum_{(x,a,r,x')\in\mathcal{D}}\left(r+\gamma Q(x',a^*(\theta);\theta_{old})-Q(x,a;\theta)\right)^2$}\\
+where: $a^*(\theta) \doteq \argmax_{a'}Q(x',a'; \theta)$\\
+\subsection{Policy-Search method}
 
 
 
