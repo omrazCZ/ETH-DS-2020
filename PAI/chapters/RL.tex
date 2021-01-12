@@ -78,8 +78,55 @@ $\theta \gets \theta - \alpha_t \delta(\theta, \theta) \nabla_\theta Q(x,a;\thet
 {\scriptsize $L(\theta) = \sum_{(x,a,r,x')\in\mathcal{D}}\left(r+\gamma\max_{a'}Q(x',a';\theta_{old})-Q(x,a;\theta)\right)^2$}
 \textbf{Double DQN (better):} \\
 {\scriptsize $L(\theta) = \sum_{(x,a,r,x')\in\mathcal{D}}\left(r+\gamma Q(x',a^*(\theta);\theta_{old})-Q(x,a;\theta)\right)^2$}\\
-where: $a^*(\theta) \doteq \argmax_{a'}Q(x',a'; \theta)$\\
+where: $a^*(\theta) \doteq \argmax_{a'}Q(x',a'; \theta)$
+
 \subsection{Policy-Search method}
+$\pi(x) = \pi(x;\theta); \; r(\tau) = \sum_{t=0}^T\gamma^t r(x_t,a_t)$\\
+$J(\theta)\doteq J(\pi(\cdot;\theta))= \mathbb{E}_{\tau \sim \pi_\theta}\left[r(\tau)\right] \simeq \frac{1}{m}\sum_{i=1}^m r(\tau^{(i)})$ \\
+with $\pi_\theta (\tau) := p(x_0)\prod_{t=1}^T\pi(a_t\vert x_t; \theta)p(x_{t+1}\vert x_t,a_t)$\\
+$\hat{\theta} = \argmax_\theta J(\theta) \Rightarrow$ SGD 
+
+\subsubsection{Theory results:}
+{\scriptsize $\nabla_\theta J(\theta) = \nabla_\theta \mathbb{E}_{\tau \sim \pi_\theta}\left[r(\tau)\right]=\mathbb{E}_{\tau \sim \pi_\theta}\left[r(\tau)\nabla_\theta \log{\pi_\theta(\tau)}\right] =: \clubsuit $}\\
+{ $ \clubsuit = \mathbb{E}_{\tau\sim\pi_\theta}\left[r(\tau)\sum_{t=0}^T \nabla_\theta \log\pi(a_t\vert x_t;\theta )\right]$}\\
+{$ \clubsuit = \mathbb{E}_{\tau \sim \pi_\theta}\left[\sum\limits_{t=0}^T(r(\tau)-b(\tau_{0:t-1})) \nabla_\theta \log\pi(a_t\vert x_t;\theta )\right] $}
+
+\subsubsection{REINFORCE}
+$b(\tau_{0:t-1}) = \sum_{t'=0}^{t-1}\gamma^{t'}r_{t'};\; r(\tau) - b(\tau_{0:t-1}) = \gamma^t G_t$ \\
+Let $G_t = \sum_{t'=t}^{T}\gamma^{t'-t}r_{t'} = r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \dots$ \\
+$\nabla_\theta J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}\left[\sum_{t=0}^T\gamma^t G_t\nabla_\theta \log\pi(a_t\vert x_t;\theta )\right]  $\\
+SGD:  $\theta \gets \theta + \eta_t \gamma^tG_t \nabla_\theta \pi(a_t\vert x_t; \theta)\;\; \forall t = 1:T$ 
+\textbf{Oss:} $G_t \gets G_t - \frac{1}{T}\sum_{t'=0}^{T-1} G_t' \Rightarrow$ Less Variance
+
+
+\subsection{Actor Critic}
+After seeing $(x,a,r,x')$: \\
+$\theta_\pi \gets \theta_\pi + \eta_t Q(x,a,\theta_Q)\nabla_{\theta_\pi}\log \pi(a\vert x; \theta_\pi)$\\
+$\theta_Q \gets \theta_Q - \eta_t\delta \nabla_{\theta_Q}Q(x,a;\theta_Q)$\\
+$\qquad \delta = Q(x,a;\theta_Q)-r-\gamma Q(x',\pi(x',\theta_\pi),\theta_Q)$
+
+\subsubsection{Theory justification:}
+$\mathbb{E}_{\tau_{t+1:\infty}\sim \pi_\theta}\left[G_t \vert a_t,x_t\right] = Q^{\pi_\theta}(x_t, a_t)$\\
+{\scriptsize $\nabla_{\theta_\pi} J(\theta_\pi)= \mathbb{E}_{\tau \sim \pi_{\theta_\pi}}\left[\sum_{t=0}^T\gamma^t \nabla_{\theta_\pi} \log\pi(a_t\vert x_t;\theta_\pi ) Q(x_t,a_t)\right] $}\\
+{\scriptsize $\nabla_{\theta_\pi} J(\theta_\pi)= \mathbb{E}_{\tau \sim \pi_{\theta_\pi},x\sim \rho(\cdot)}\left[\nabla_{\theta_\pi} \log\pi(a_t\vert x_t;\theta_\pi ) Q(x_t,a_t)\right] $}\\
+where $\rho(x) = \sum_{t=0}^\infty \gamma^t p(x_t=x)$.
+
+\subsubsection{Advantage Function Baseline}
+We can us $V(x;\theta_V)$ as baseline for $Q(x,a;\theta_Q)$\\
+$A^\pi(x,a) \doteq Q^\pi(x,a)-V^\pi(x)$\\
+\textbf{Oss:} $\forall\pi \forall x \max_a A^\pi(x,a)\geq 0$\\
+\textbf{Oss:} $\pi \text{ optimal } \forall x  \;A^\pi(x,\pi(x))\leq 0$.
+
+\subsubsection{Off policy variation}
+{\scriptsize $\hat{\theta}_\pi = \argmax J(\theta); \; J(\theta)=\mathbb{E}_{x\sim\mu}\left[Q(x,\pi(x;\theta);\theta_Q)\right]$}\\
+where $\mu$ visits all states. SGD can now be done in Batches and Off-policy also for $\theta_\pi$:\\
+$\theta_\pi \gets \theta_\pi + \eta \nabla_{\theta_\pi} \frac{1}{|B|}\sum_{(x,a,r,x')\in B}Q(x,\pi(x,\theta_\pi);\theta_Q)$\\
+If $\pi$ is randomized we can usa the reparametrization trick.\\
+$J_\lambda (\theta) = J(\theta) + \lambda H(\pi_\theta)$ to encourage exploration
+
+
+
+
 
 
 

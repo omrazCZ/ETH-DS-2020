@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.25)  11 JAN 2021 14:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.25)  12 JAN 2021 12:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1344,24 +1344,24 @@ Overfull \hbox (6.42538pt too wide) in paragraph at lines 72--76
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 77--82
-
+Overfull \hbox (1.0911pt too wide) in paragraph at lines 90--93
+[]\OMS/jkp/m/n/10 | \OT1/jkp/m/n/10 (-20) = \U/jkpsyb/m/n/10 E[] []$[] 
  []
 
-) [2] (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/PAI/main.aux) ) 
+) [2] [3] (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/PAI/main.aux) ) 
 Here is how much of TeX's memory you used:
- 23855 strings out of 480608
- 476859 string characters out of 5903630
+ 23859 strings out of 480608
+ 476898 string characters out of 5903630
  821533 words of memory out of 5000000
  39122 multiletter control sequences out of 15000+600000
- 619087 words of font info for 154 fonts, out of 8000000 for 9000
+ 619511 words of font info for 157 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  60i,15n,67p,879b,501s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/kpfonts/kpfonts-expert.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/sourcesanspro/a_ggs4wk.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/adobe/sourcesanspro/SourceSansPro-Bold.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpbn8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpbne.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpex.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmi.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmia.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmit8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmn8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmne.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpsy.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpsya.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpsyb.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpsyc.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpttmn8a.pfb>
-Output written on /Users/marcomilanta/Documents/ETH/ETH-DS-2020/PAI/main.pdf (2 pages, 182702 bytes).
+Output written on /Users/marcomilanta/Documents/ETH/ETH-DS-2020/PAI/main.pdf (3 pages, 187417 bytes).
 PDF statistics:
- 73 PDF objects out of 1000 (max. 8388607)
- 54 compressed objects within 1 object stream
+ 76 PDF objects out of 1000 (max. 8388607)
+ 56 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  23565 words of extra memory for PDF output out of 24883 (max. 10000000)
 
