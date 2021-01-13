@@ -56,7 +56,7 @@ $Q(x_t,a_t) ${\scriptsize $\gets (1-\alpha_t)Q(x_t,a_t) + \alpha_t(r_t+\gamma \m
 Initialize: $Q(x,a)=\frac{R_{max}}{1-\gamma}\prod_{t=1}^{T_{init}}(1-\alpha_t)^{-1}$\\
 Same convergence time as with $R_{max}$. Memory $O(|X||A|)$. Comp: $O(|A|)$.
 
-\section{Parametric RL}
+\section{Parametric Model Free RL}
 \subsection{Parametric TD-learning}
 \subsubsection{TD-learinging as SGD}
 TD-learing = 1 sample ($x', r \vert x, \pi(x)$) SGD on:\\
@@ -117,12 +117,75 @@ $A^\pi(x,a) \doteq Q^\pi(x,a)-V^\pi(x)$\\
 \textbf{Oss:} $\forall\pi \forall x \max_a A^\pi(x,a)\geq 0$\\
 \textbf{Oss:} $\pi \text{ optimal } \forall x  \;A^\pi(x,\pi(x))\leq 0$.
 
-\subsubsection{Off policy variation}
-{\scriptsize $\hat{\theta}_\pi = \argmax J(\theta); \; J(\theta)=\mathbb{E}_{x\sim\mu}\left[Q(x,\pi(x;\theta);\theta_Q)\right]$}\\
+\subsubsection{Off policy variation (DDPG)}
+{\scriptsize $\hat{\theta}_\pi = \argmax J(\theta_\pi); \; J(\theta_\pi)=\mathbb{E}_{x\sim\mu}\left[Q(x,\pi(x;\theta_\pi);\theta_Q)\right]$}\\
 where $\mu$ visits all states. SGD can now be done in Batches and Off-policy also for $\theta_\pi$:\\
 $\theta_\pi \gets \theta_\pi + \eta \nabla_{\theta_\pi} \frac{1}{|B|}\sum_{(x,a,r,x')\in B}Q(x,\pi(x,\theta_\pi);\theta_Q)$\\
-If $\pi$ is randomized we can usa the reparametrization trick.\\
+\textbf{Oss:}
+$\pi$ randomized $\Rightarrow$ reparametrization trick.\\
 $J_\lambda (\theta) = J(\theta) + \lambda H(\pi_\theta)$ to encourage exploration
+
+
+\section{Parametric Model Based RL}
+
+
+\subsection{Planning}
+$J(a_{0:\infty}) := \sum_{t=0}^\infty \gamma^t r(x_t,a_t)$
+
+\subsubsection{Reciding Horizon (MPC)}
+$\max\limits_{a_{t:t+H-1}}\sum_{\tau = t}^{t+H-1}\gamma^{\tau - t}r_\tau(x_\tau, a_\tau) \text{ s.t. } x_{\tau + 1} = f(x_\tau, a_\tau)$\\
+And then we carry out action $a_t$.\\
+\textbf{$\nabla \uparrow$:} $\nabla$ of $f\circ \dots \circ f$ easy vanishes or explodes.
+\textbf{Random shooting:} Pick some set of actions at random and chose the first action of the best one
+
+\subsubsection{Value Function estimates}
+We look at value function after the horizon H: \\
+We maximize $J_H(a_{t:t+H-1}) \coloneqq\\ \sum_{\tau = t}^{t+H-1}\gamma^{\tau - t}r_\tau(x_\tau (a_{t:\tau-1}), a_\tau) + \gamma^H V(x_{t+H})$\\
+\textbf{Microth:} If $V$ is correct then the chosen action is optimal $\forall H$\\
+\textbf{Oss:} Value can estimated with off-policy Techniques (TD-learing)
+
+\subsubsection{Planning (stochastic model)} \label{pl}
+{\scriptsize $\mathbb{E}_{x_{t+1:t+H}}\left[ \sum\limits_{\tau = t}^{t+H-1}\gamma^{\tau - t}r_\tau(x_\tau, a_\tau) + \gamma^H V(x_{t+H})\vert a_{t:t+H-1}\right]$}\\
+maximise this doing SGD by sampling or random shooting.
+
+\subsubsection{Parametric policy (stoch. model)}
+{\scriptsize $\mathbb{E}_{x_{t+1:t+H}}\left[ \sum\limits_{\tau = t}^{t+H-1}\gamma^{\tau - t}r_\tau(x_\tau, \pi_\theta(x_\tau)) + \gamma^H Q(x_{t+H}, \pi_\theta(x_{t+H}))\vert \theta\right]$}\\
+\textbf{Oss:} H=0 $\Rightarrow$ DDPG objective
+
+\subsection{Model Learning}
+\textbf{Insight:} Markov $\Rightarrow \mathcal{D} = \left\{(x_i,a_i,r_i,x_{i+1})_i\right\}_{i=1:t}$ is a conditional $\perp$ dataset\\
+Learn $f, \mathcal{R}\text{ s.t.} \;\; x_{i+1} \gets f(x_i,a_i);\quad r_i \gets \mathcal{R}(x_i,a_i)$ 
+
+\subsubsection{Neural Networks}
+$x_{t+1} \sim \mathcal{N}(\mu(x_t, a_t, \theta), \Sigma(x_t, a_t, \theta))$\\
+Where $\Sigma = CC^T,\; C$ lower triangular. \\
+\textbf{Pittfall:} using MAP estimate we don't capture epistemic uncertainty $\Rightarrow$ Bayesian Learning\\
+\textbf{Greedy exploitation:}\\
+\begin{algorithm}[H]
+    \Repeat(){}{
+        plan $\pi$ to maximize $\mathbb{E}_{f\sim p(\cdot\vert \mathcal{D})}J_H(\pi,f)$\\
+        rollout $\pi$ to collect more data\\
+        update $p(\cdot\vert\mathcal{D})$
+    }
+\end{algorithm}
+To find $\pi$ we use SGD or Trajectory samling (sampling also $f\sim p(\cdot\vert \mathcal{D})$) 
+
+\subsubsection{Exploration?}
+\textbf{Thompson:} {\scriptsize $ \mathbb{E}_{f\sim p(\cdot\vert \mathcal{D})}J_H(\pi,f) \simeq J_H(\pi,\hat(f)),\; \hat{f}\sim p(\cdot\vert \mathcal{D})$}\\
+\textbf{Optimism:} Let $M(\mathcal{D})$ be set of most plausible models given $\mathcal{D}$. then:\\
+$\mathbb{E}_{f\sim p(\cdot\vert \mathcal{D})}J_H(\pi,f) \simeq \max_{f\in M(\mathcal{D})} J_H(\pi,f)$\\
+We do Greedy exploitation but joint maximization $max_\pi\max_{f\in M(\mathcal{D})} J_H(\pi,f)$ is hard: \\H-URCL: 
+$\tilde{f}(x,a) = \mu(x,a)+\beta_{t-1}\Sigma (x,a)\eta(x,a)$.
+then $\pi_t^{H-URCL}=\argmax_\pi J_H(\tilde{f}, \pi)$
+
+\subsection{Safe Exploration planning}
+With confidence bounds I make $1-\delta$ sure in H step I can be safe. Issue, long term dependency\\
+\textbf{Liapunov:} I make sure I can reach a Liapunov state
+
+
+
+
+
 
 
 

@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1610452321 "/Users/marcomilanta/Documents/ETH/ETH-DS-2020/PAI/main.tex" "/Users/marcomilanta/Documents/ETH/ETH-DS-2020/PAI/main.pdf" "main" 1610452333
-  "/Users/marcomilanta/Documents/ETH/ETH-DS-2020/PAI/main.aux" 1610452323 6085 307f4a1ea9f055024129da32971d000f ""
+["pdflatex"] 1610535525 "/Users/marcomilanta/Documents/ETH/ETH-DS-2020/PAI/main.tex" "/Users/marcomilanta/Documents/ETH/ETH-DS-2020/PAI/main.pdf" "main" 1610535526
+  "/Users/marcomilanta/Documents/ETH/ETH-DS-2020/PAI/main.aux" 1610535526 7617 2148b44d1c6f7561e2b98fca0adcf39b ""
   "/Users/marcomilanta/Documents/ETH/ETH-DS-2020/PAI/main.tex" 1610356082 2941 610e597d145f9064c003aef342a13b66 ""
   "/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/kpfonts/kpfonts-expert.enc" 1240420913 2639 b7bbeb66c016cde6fdcad9263fe54a4a ""
@@ -228,16 +228,16 @@
   "chapters/BayesianNeuralNets.tex" 1610107813 2555 eefb2a10b7569bd111e7c5717454b492 ""
   "chapters/BayesianOptimization.tex" 1610199758 1051 5b6a61ef0520d22e96be451b8fdb0314 ""
   "chapters/BayesianRegression.tex" 1609970268 224 99704f84233194b5524c81b48bf5ff05 ""
-  "chapters/GaussianProcess.tex" 1610098717 3192 e33aecfe6cb0bc8753938f2e30e35914 ""
+  "chapters/GaussianProcess.tex" 1610465295 3210 657f0fc2441a57be7fa75c2650175c57 ""
   "chapters/KelmanFilter.tex" 1609781017 480 5884790edace03338bc69985a094fe00 ""
   "chapters/MarkovDecisionProcess.tex" 1610362856 2511 9f0b48cd7eb73394cf7c70cdb42ee7c9 ""
-  "chapters/RL.tex" 1610452332 7651 b8b4719b5f18694e0776c0344ff8df3d ""
+  "chapters/RL.tex" 1610535524 10917 bae3ce8859034b7bb20caf2ee34cc3ea ""
   "chapters/Review.tex" 1610361986 2377 81520d72c918bb7d2509d3dbafdc68e2 ""
-  "main.aux" 1610452323 6085 307f4a1ea9f055024129da32971d000f "pdflatex"
+  "main.aux" 1610535526 7617 2148b44d1c6f7561e2b98fca0adcf39b "pdflatex"
   "main.tex" 1610356082 2941 610e597d145f9064c003aef342a13b66 ""
   (generated)
+  "/Users/marcomilanta/Documents/ETH/ETH-DS-2020/PAI/main.log"
+  "main.log"
   "main.pdf"
   "main.aux"
   "/Users/marcomilanta/Documents/ETH/ETH-DS-2020/PAI/main.pdf"
-  "main.log"
-  "/Users/marcomilanta/Documents/ETH/ETH-DS-2020/PAI/main.log"
