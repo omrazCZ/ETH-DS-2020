@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.25)  4 JAN 2021 14:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.25)  14 JAN 2021 09:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Main.tex"
-(/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Main.tex
+**/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Main.tex
+(/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Main.tex
 LaTeX2e <2020-02-02> patch level 5
 L3 programming layer <2020-03-06> (/usr/local/texlive/2020/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
@@ -1166,7 +1166,7 @@ Document Style - pseudocode environments for use with the `algorithmicx' style
 )
 \pgf@layerbox@background=\box139
 \pgf@layerboxsaved@background=\box140
- (/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Main.aux)
+ (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Main.aux)
 \openout1 = `Main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/jkp/m/it on input line 82.
@@ -1274,7 +1274,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `jkp' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-(/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Resources/Basics.tex
+(/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/Basics.tex
 LaTeX Font Info:    Trying to load font information for T1+SourceSansPro-LF on input line 1.
  (/usr/local/texlive/2020/texmf-dist/tex/latex/sourcesanspro/T1SourceSansPro-LF.fd
 File: T1SourceSansPro-LF.fd 2016/12/03 (autoinst) Font definitions for T1/SourceSansPro-LF.
@@ -1324,12 +1324,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 69--70
 
  []
 
-) (/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Resources/GaussianProcess.tex
+) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/GaussianProcess.tex
 Underfull \hbox (badness 10000) in paragraph at lines 36--49
 []\OML/jkp/m/it/10 k\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 x; y\OT1/jkp/m/n/10 (+20) ) = \OML/jkp/m/it/10 k[]\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 x; y\OT1/jkp/m/n/10 (+20) ) + \OML/jkp/m/it/10 k[]\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 x; y\OT1/jkp/m/n/10 (+20) )$[]\T1/jkp/m/n/10 (+20) , $[]\OML/jkp/m/it/10 k\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 x; y\OT1/jkp/m/n/10 (+20) ) =
  []
 
-) (/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Resources/Regression.tex
+) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/Regression.tex
 Underfull \hbox (badness 10000) in paragraph at lines 8--12
 \T1/jkp/m/n/10 (+20) Asymptotic nor-ma-li-ty: $[][]\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 ^^R \OMS/jkp/m/n/10 ^^@ []\OT1/jkp/m/n/10 (+20) ) \OMS/jkp/m/n/10 !
  []
@@ -1347,7 +1347,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 8--12
 LaTeX Font Info:    Trying to load font information for U+bbm on input line 65.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
-)) (/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Resources/NumericalEstimatesMethods.tex
+)) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/NumericalEstimatesMethods.tex
 Underfull \hbox (badness 5260) in paragraph at lines 75--2
 []$[][] \OT1/jkp/m/n/10 (+20) = [][] [] + \OML/jkp/m/it/10 ^^U [][] \OMS/jkp/m/n/10 ) [] \OT1/jkp/m/n/10 (+20) =
  []
@@ -1367,7 +1367,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 75--2
 \T1/jkp/m/n/10 (+20) then $[]\OMS/jkp/m/n/10 j [][] \OML/jkp/m/it/10 X[]\OMS/jkp/m/n/10 j \OT1/jkp/m/n/10 (+20) = [][] []$[] \T1/jkp/m/n/10 (+20) . And
  []
 
-) (/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Resources/Classification.tex
+) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/Classification.tex
 Underfull \hbox (badness 10000) in paragraph at lines 14--15
 []$[]\OML/jkp/m/it/10 c[] \OT1/jkp/m/n/10 (+20) = [][] \OMS/jkp/m/n/10 R\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 c\OT1/jkp/m/n/10 (+20) ) \OMS/jkp/m/n/10 ) \OML/jkp/m/it/10 c[]\OT1/jkp/m/n/10 (+20) (\OML/jkp/m/it/10 x\OT1/jkp/m/n/10 (+20) ) =
  []
@@ -1384,7 +1384,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 20--21
 
 [1
 
-{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]) (/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Resources/SupportVectorMachine.tex
+{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/SupportVectorMachine.tex
 
 LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 43.
 
@@ -1393,17 +1393,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 41--57
 []$[]
  []
 
-) (/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Resources/NonLinearSVM.tex) (/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Resources/Ensemble.tex
-Overfull \hbox (3.40701pt too wide) in paragraph at lines 20--31
+) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/NonLinearSVM.tex) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/Ensemble.tex
+Overfull \hbox (3.40701pt too wide) in paragraph at lines 25--36
 \T1/jkp/m/n/10 (-20) 2. Com-pu-te er-ror $[]\OML/jkp/m/it/10 ^^O[] \OT1/jkp/m/n/10 (-20) = [][] \OML/jkp/m/it/10 w[]\U/bbm/m/n/10 1[]\OML/jkp/m/it/10 = [][] w[]$[] 
  []
 
-) (/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Resources/MixtureModel.tex) (/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Resources/NeuralNet.tex) (/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Resources/Autoencoders.tex
+) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/MixtureModel.tex) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/NeuralNet.tex) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/Autoencoders.tex
 Underfull \hbox (badness 10000) in paragraph at lines 26--2
 
  []
 
-) (/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Resources/NonParametricBayesian.tex) (/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Resources/PACLearning.tex
+) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/NonParametricBayesian.tex) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/PACLearning.tex
 Overfull \hbox (11.37512pt too wide) in paragraph at lines 13--1
 []\OML/jkp/m/it/10 p\OT1/jkp/m/n/10 (-20) (\OML/jkp/m/it/10 z[] \OT1/jkp/m/n/10 (-20) = \OML/jkp/m/it/10 k\OMS/jkp/m/n/10 j\OML/jkp/bx/it/10 z[]\OML/jkp/m/it/10 ; \OML/jkp/bx/it/10 x\OML/jkp/m/it/10 ; ; \OML/jkp/bx/it/10 ^^V\OT1/jkp/m/n/10 (-20) ) = []$[]
  []
@@ -1418,17 +1418,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 2--14
 
  []
 
-) [2] (/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Main.aux) ) 
+) [2] (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Main.aux) ) 
 Here is how much of TeX's memory you used:
- 24556 strings out of 480608
- 488347 string characters out of 5903630
+ 24560 strings out of 480608
+ 487586 string characters out of 5903630
  829343 words of memory out of 5000000
  39728 multiletter control sequences out of 15000+600000
- 636755 words of font info for 220 fonts, out of 8000000 for 9000
+ 637179 words of font info for 223 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,12n,67p,904b,458s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,12n,67p,880b,458s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc} </Users/marcomilanta/Library/texlive/2020/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.600pk> </Users/marcomilanta/Library/texlive/2020/texmf-var/fonts/pk/ljfour/public/bbm/bbm8.600pk>{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/kpfonts/kpfonts-expert.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/sourcesanspro/a_ggs4wk.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/adobe/sourcesanspro/SourceSansPro-Bold.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpbmi.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpbn8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpex.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmi.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmia.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmit8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmn8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmne.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpsy.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpsyb.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpsyc.pfb>
-Output written on "/Users/marcomilanta/Documents/ETH/AML/Paper for the exam/aml-cheatsheet/Main.pdf" (2 pages, 182825 bytes).
+Output written on /Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Main.pdf (2 pages, 182768 bytes).
 PDF statistics:
  79 PDF objects out of 1000 (max. 8388607)
  56 compressed objects within 1 object stream
