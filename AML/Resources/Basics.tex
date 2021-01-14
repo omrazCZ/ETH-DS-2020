@@ -1,4 +1,5 @@
 \section{Basics}
+
 \subsection*{Gaussian}
 $f(x) = \frac{1}{\sqrt{(2\pi)^d\det\Sigma}} e^{- \frac{1}{2} (x-\mu)^T \Sigma^{-1} (x-\mu)},\quad \mathcal{N}(x|\mu, \Sigma)$\\
 $X {\sim} \mathcal{N}(\mu,\Sigma),\;Y{=}A{+}BX \Rightarrow Y{\sim}\mathcal{N}(A{+}B\mu,B\Sigma B^T)$ 
@@ -7,6 +8,7 @@ Conditionate Gaussians\\
 \begin{bmatrix} \beta \\ x \end{bmatrix} \sim N\left(\begin{bmatrix}\bar{\beta} \\ \bar{x}\end{bmatrix},\begin{bmatrix} \Sigma_{11}&\Sigma_{12} \\\Sigma_{21}&\Sigma_{22} \end{bmatrix}\right)
 \Rightarrow\beta\vert x=y \sim N\left(\bar{\beta} + \Sigma_{12}\Sigma^{-1}_{22}(y-\bar{x}, ) , \Sigma_{11}-\Sigma_{12}\Sigma^{-1}_{22}\Sigma_{21}\right)
 \)
+
 \subsection*{Primal Dual problem}
 Let \(\mathcal{P} = 
 	\begin{cases}
@@ -64,9 +66,11 @@ In general the solution of the \(\mathcal{D}\) is smaller then $\mathcal{P}$. Bu
 	\item $\nabla \text{tanh}(x) = 1-\text{tanh}^2(x)$ 
 	\item $tanhx {=} \frac{sinhx}{coshx} {=} \frac{e^{x}-e^{-x}}{e^{x} + e^{x}}$
 \end{inparaitem}
+\subsection*{Newton's Method}
+$x^{(k+1)} \gets x^{(k)}q-H^{-1}_F\nabla F$
 \subsection*{Probability / Statistics}
 \begin{compactdesc}
-	\item[Bayes' Rule]$ P(Y|X) = \frac{P(X|Y)P(Y)}{P(X)}\frac{P(X|Y)P(Y)}{\sum\limits^k_{i=1}P(X|Y_i)P(Y_i)}$\\
+	\item[Bayes' Rule]$ P(y|x) = \frac{P(x|y)P(y)}{P(x)}$\\
 	\item[MGF] $\mathbf{M}_X(t)=\mathbb{E}[e^{\mathbf{t}^T \mathbf{X}}]$, $\mathbf{X}=(X_1,.., X_n) $
 \end{compactdesc}
 

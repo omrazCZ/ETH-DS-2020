@@ -10,7 +10,7 @@ $\mathcal{A}$ can learn $c$ if $\exists \pi \in$ Polynomials s.t.:\\
     \item $\forall \epsilon \in (1, \frac{1}{2}),\;\forall \delta \in (1, \frac{1}{2})$ \\
     \item $\forall n \geq \pi(\frac{1}{\epsilon}, \frac{1}{\delta}, \text{size}(c))$\\
 \end{inparaitem}
-then $\mathbbm{P}_{\mathcal{Z}\sim\mathcal{D}}\left(\mathcal{R}(\mathcal{A}(\mathcal{Z}))\leq \epsilon\right)\geq 1-\delta$\\
+then $\mathbbm{P}_{\mathcal{Z}\sim\mathcal{D}}\left(\mathcal{R}(\mathcal{A}(\mathcal{Z}))- \inf_{c\in \mathcal{C}}\mathcal{R}(c)\leq \epsilon\right)\geq 1-\delta$\\
 
 VC ineq.: $\mathcal{R}(\hat{c}_n^*) - \inf\limits_{c\in\mathcal{C}}\mathcal{R}(c) \leq 2\sup\limits_{c\in\mathcal{C}}|\hat{\mathcal{R}}_n(c) - \mathcal{R}(c)|$ \\ 
 $P\{ \mathcal{R}(\hat{c}_n^*) - \mathcal{R}(c^*) > \epsilon \} \leq P\{ \sup\limits_{c\in\mathcal{C}}|\hat{\mathcal{R}}_n(c) - \mathcal{R}(c)| > \frac{\epsilon}{2} \} $\\
