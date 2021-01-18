@@ -3,7 +3,7 @@
 
 
 \subsection{Laplace Approximation}
-$\hat\theta=\argmax_\theta p(\theta\vert y)$\\
+$\hat\theta=\argmax_\theta p(\theta\vert y)$; 
 $\Lambda = -\nabla_\theta \nabla_\theta \log{p(\theta\vert y)}\vert_{\theta = \hat\theta}$\\
 $p(\theta\vert y)\simeq q(\theta)=N(\hat\theta,\Lambda^{-1})$
 
@@ -19,22 +19,21 @@ $ELBO \doteq \mathbb{E}_{\theta \sim q}\left[\log{p(y\vert\theta)}\right]-KL(q\v
 
 \textbf{Ergodic Markov Chain}: \\
 $\exists t \text{ s.t. } \mathbb{P}(i \to j \text{ in t steps})>0\;\; \forall i,j \Rightarrow\\
- \exists! \pi = \lim_{N\to \infty} \mathbb{P}(X_n=x)$ Limit distribution\\
+ \exists! \pi = \lim_{N\to \infty} \mathbb{P}(X_n=x)$ Limit distribution
 
  \textbf{Ergodic Theorem}: if $(X_i)_{i\in\mathbb{N}}$ is ergodic:\\
-$\ \lim_{N\to \infty}\frac{1}{n}\sum_{i=1}^{N}f(X_i)=\mathbb{E}_{x\sim\pi}\left[f(x)\right]$\\
+$\ \lim_{N\to \infty}\frac{1}{n}\sum_{i=1}^{N}f(X_i)=\mathbb{E}_{x\sim\pi}\left[f(x)\right]$
 
 \textbf{Detailed Blanced Equation}:\\
 $P(x\vert x')$ is the transition model of a MC:\\
-if $R(x)P(x'\vert x) = R(x')P(x\vert x')$ then $R$ is the limit distribution of the MC \\
+if $R(x)P(x'\vert x) = R(x')P(x\vert x')$ then $R$ is the limit distribution of the MC
 
 \textbf{Metropolis Hastings Algo}: Sample from a MC which has $P(x) = \frac{Q(x)}{Z}$ as limit dist.\\
 \begin{algorithm}[H]
     \SetKwFor{kwWith}{with}{do}{}
     \SetKwInput{kwInit}{init}
     \KwResult{$\left\{X_i\right\}_{i\in\mathbb{N}}$ sampled from the MC}
-    \kwInit{ $R(x\vert x')$ }
-    \tcc{Good $R$ choice $\to$ fast convergence} 
+    \kwInit{ $R(x\vert x')$ (Good choice $\to$ fast conv)}
     \kwInit{ $X_0 = x_0$ }
     \For{$t \gets 1, 2, \dots$}{
         $x' \sim R(\cdot, x_{t-1})$\\
@@ -70,7 +69,7 @@ Used when $P(X_{1:n})$ is hard but $P(X_i\vert X_{-i})$ is easy.
 $*$ if we do it $\forall i \notin B$ no DBE but more practical
 
 
-\subsection{Variable elimination for MPE (most probable explanation):}
+\subsection{Var. elim. for Most Probable Explanation:}
 With loopy graphs, BP is often \textbf{overconfident/oscillates}.
 
 \iffalse

@@ -11,7 +11,7 @@ Gaussian Mixture distribution:
 $\mathbb{V}(y^*\vert x^*,\mathcal{D}) \simeq \\
 \simeq \begingroup\color{magenta}\frac{1}{m}\sum_{j=1}^m \sigma^2(x^*, \theta^{(i)})\endgroup + \begingroup\color{blue}\frac{1}{m}\sum_{j=1}^m\left(\mu(x^*,\theta^{(j)}-\bar\mu(x^*))\right)\endgroup$\\
 $\begingroup\color{magenta}\blacksquare\endgroup \to $Aletoric,
-$\begingroup\color{blue}\blacksquare\endgroup \to $Epistemic\\
+$\begingroup\color{blue}\blacksquare\endgroup \to $Epistemic
 
 \textbf{Dropouts Regularization}: Random ignore nodes in SGD iteration: 
 Equavalent to VI with $Q = \left\{q(\cdot\vert \lambda) = \prod_j q_j(\theta_j\vert \lambda), \; \lambda \in \mathbb{R}^d \right\}$\\
@@ -38,5 +38,5 @@ Held-Out-Likelihood $\doteq \log{p(y'_{1:m} \vert x'_{1:m} , \mathcal{D}_{train}
 $\geq \mathbb{E}_{\theta \sim \hat q}\left[\sum_{i=1}^m\log{p(y_i'\vert x_i', \theta)}\right]$ (Jensen)\\
 $\simeq \frac{1}{k}\sum_{j=1}^k\sum_{i=1}^m\log{p(y_i'\vert x_i', \theta^{(j)})}, \;\; \theta^{(j)} \sim \hat q$
 
-\textbf{Evaluate predicted accuracy}: We divide $\mathcal{D}_{val}$ into bins according to predicted confidence values. In each bin we compare accuracy with confidence
+\textbf{Evaluate predicted accuracy}: We divide $\mathcal{D}_{val}$ into bins according to pred. confidence vals. In each bin we compare accuracy with confidence
 

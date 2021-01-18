@@ -1,0 +1,14 @@
+\section{Reinforcement Learning}
+
+\subsection{R-Max algo}
+
+
+
+\subsection{Q-learning}
+
+Q-val update: \(Q(x,a) \leftarrow r(s,a) (1-\alpha_{t})Q(x,a) + \alpha_{t} (r + \gamma max_{a'} Q(x',a')) \)
+
+Robins Monro conditions for convergence:
+\(\alpha_{t} \text{ s.t. } \sum_{t} \alpha_{t} = \infty, \sum_{t} \alpha_{t}^{2} < \infty\) and all state action pairs chosen infinitely often
+
+Epsilon greedy: With probability \( \epsilon\) Pick random action; \(1-\epsilon\) pick best

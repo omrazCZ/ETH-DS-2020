@@ -1,15 +1,14 @@
 \section{Non Parametric RL}
-It is an MDP with unknown $p(x'\vert x,a)$ and $r(x,a)$
+It is an MDP with unknown $P(x'\vert x,a)$ and $r(x,a)$
 
 \subsection{Model-based RL}
 From all steps $X_{t+1},R_t \vert X_{t}, A_{t}$ we can learn:\\
-$p(x'\vert x,a)\simeq \hat{p}_{x'\vert x, a} = \frac{Count(X_{t+1}=x',\; X_t=x,\;A_t =a)}{Count(X_t=x,\; A_t = a)}$\\
+$P(x'\vert x,a)\simeq \hat{p}_{x'\vert x, a} = \frac{Count(X_{t+1}=x',\; X_t=x,\;A_t =a)}{Count(X_t=x,\; A_t = a)}$\\
 $r(x,a)\simeq \hat{r}_{x,a}= \frac{1}{Count(X_t=x,\; A_t=a)}\sum_{t|X_t=x,\; A_t=a}R_t$\\
 How to chose $a_t$?
 
 \subsubsection{$\epsilon$-greedy (On-Policy)}
-With probability $\epsilon$, pick random action.\\
-With probability $1-\epsilon$, pick $a = \argmax Q(x,a)$.\\
+$P(rand(a)) = \epsilon$, $P(\argmax Q(x,a)) = 1 - \epsilon$\\
 \textbf{Oss:} $Q$ is caclulated from $(\hat{p}, \hat{r})$\\
 \textbf{Th:} If $\epsilon_t\xrightarrow{RM}0$ then $(\hat{r},\hat{p})\xrightarrow{a.s.}(r,p)$
 
@@ -21,13 +20,13 @@ If $\tau \uparrow $ it means I trust less $Q$
 We add a fairy state $x^*$\\
 \begin{algorithm}[H]
     \SetKwInput{kwInit}{init}
-    \kwInit{$r(x,a) = R_{max} \; \forall x\in \mathcal{X}\cup \left\{x^*\right\},a\in\mathcal{A}$}
-    \kwInit{$p(x^*\vert x, a) = 1 \; \forall x\in \mathcal{X},a\in\mathcal{A}$}
+    \kwInit{$r(x,a) = R_{max} \; \forall x\in \mathcal{X}\cup \left\{x^*\right\},\forall a\in\mathcal{A}$}
+    \kwInit{$P(x^*\vert x, a) = 1 \; \forall x\in \mathcal{X},\forall a\in\mathcal{A}$}
     \kwInit{$\pi = $ optimal policy w.r.t. $p$, $r$}
     \Repeat{}{  
         Execute $\pi$ and get $x_{t+1}$ and $r_t$\\
         Update belief of $r(x_t,\pi(x_t))$ and $p(x_{t+1}\vert x_t,\pi(x_t))$\\
-        If obeserved 'enough' in $(x,a)$ recompute $\pi$ using the updated belief only in $(x,a)$
+        If observed 'enough' in $(x,a)$ recompute $\pi$ using the updated belief only in $(x,a)$
     }
 \end{algorithm}
 \textbf{'Enough'?} See Hoeffding's inequality \\
@@ -136,13 +135,13 @@ $J(a_{0:\infty}) := \sum_{t=0}^\infty \gamma^t r(x_t,a_t)$
 $\max\limits_{a_{t:t+H-1}}\sum_{\tau = t}^{t+H-1}\gamma^{\tau - t}r_\tau(x_\tau, a_\tau) \text{ s.t. } x_{\tau + 1} = f(x_\tau, a_\tau)$\\
 And then we carry out action $a_t$.\\
 \textbf{$\nabla \uparrow$:} $\nabla$ of $f\circ \dots \circ f$ easy vanishes or explodes.
-\textbf{Random shooting:} Pick some set of actions at random and chose the first action of the best one
+\textbf{Random shooting:} Pick some set of actions at random; chose the 1st action of the best one.
 
 \subsubsection{Value Function estimates}
 We look at value function after the horizon H: \\
 We maximize $J_H(a_{t:t+H-1}) \coloneqq\\ \sum_{\tau = t}^{t+H-1}\gamma^{\tau - t}r_\tau(x_\tau (a_{t:\tau-1}), a_\tau) + \gamma^H V(x_{t+H})$\\
 \textbf{Microth:} If $V$ is correct then the chosen action is optimal $\forall H$\\
-\textbf{Oss:} Value can estimated with off-policy Techniques (TD-learing)
+\textbf{Oss:} Value can estimated with off-policy techniques (TD-learing)
 
 \subsubsection{Planning (stochastic model)} \label{pl}
 {\scriptsize $\mathbb{E}_{x_{t+1:t+H}}\left[ \sum\limits_{\tau = t}^{t+H-1}\gamma^{\tau - t}r_\tau(x_\tau, a_\tau) + \gamma^H V(x_{t+H})\vert a_{t:t+H-1}\right]$}\\

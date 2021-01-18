@@ -1,4 +1,4 @@
-\section{Review of useful concepts and Introduction}
+\section{Review of useful concepts and Intro}
 
 \subsection{Usefull math}
 $\varphi$ is convex $\Rightarrow \varphi(\mathbb{E}[X]) \leq  \mathbb{E}[\varphi(X)]$\\
@@ -10,26 +10,11 @@ $\Rightarrow n \geq \frac{C}{2\epsilon^2}\log\frac{2}{\delta}$\\
 %$\sigma =$ covariance matrix, $\mu$ = mean\\
 $f(x) = \frac{1}{2\pi \sqrt{|\Sigma|}} e^{- \frac{1}{2} (x-\mu)^T \Sigma^{-1} (x-\mu)}$
 
-Suppose we have a Gaussian random vector
+Conditionate Gaussians\\
 \(
-\begin{bmatrix} 
-    X_A \\ 
-    X_B 
-\end{bmatrix} 
-\sim \mathcal{N}\left(
-\begin{bmatrix}
-    {\mu_A} \\ 
-    {\mu_B}
-\end{bmatrix},
-\begin{bmatrix} 
-    \Sigma_{AA}&\Sigma_{AB} \\
-    \Sigma_{BA}&\Sigma_{BB} 
-\end{bmatrix}\right)
-\Rightarrow X_A\vert X_B=x_B \sim \mathcal{N}\left(
-    \mu_A+\Sigma_{AB}\Sigma^{-1}_{BB}(x_B-\mu_B) , 
-    \Sigma_{AA}-\Sigma_{AB}\Sigma^{-1}_{BB}\Sigma_{BA}
-\right)
-\)
+\begin{bmatrix} \beta \\ x \end{bmatrix} \sim N\left(\begin{bmatrix}\bar{\beta} \\ \bar{x}\end{bmatrix},\begin{bmatrix} \Sigma_{11}&\Sigma_{12} \\\Sigma_{21}&\Sigma_{22} \end{bmatrix}\right)
+\Rightarrow\beta\vert x=y \sim \\ N\left(\bar{\beta} + \Sigma_{12}\Sigma^{-1}_{22}(y-\bar{x}, ) , \Sigma_{11}-\Sigma_{12}\Sigma^{-1}_{22}\Sigma_{21}\right)
+\)% consistent with cheat sheet for AML
 
 
 \subsection{Information Theory elements:}
