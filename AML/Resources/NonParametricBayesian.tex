@@ -8,7 +8,11 @@ $Dir(x|\alpha) = \frac{1}{B(\alpha)} \prod_{k=1}^n x_k^{a_k - 1}$, $B(\alpha) = 
       \frac{\alpha}{\alpha + n} \;\tau\notin\mathcal{P} 
    \end{cases}
 \)\\ 
-de Finetti: $p(X_1, ..., X_n) {=} \int (\prod_{i=1}^n p(x_i|G))dP(G)$ 
+de Finetti: $p(X_1, ..., X_n) {=} \int (\prod_{i=1}^n p(x_i|G))dP(G)$ \\
+Stick breaking: $\rho = \left\{\rho_i\right\}_{i \in \mathbb{N}} \sim GEM(\alpha)$ if:\\
+$\rho_k = \beta_k\left(1-\sum_{i=1}^{k-1}\rho_k\right)$.\\
+Then $G(\theta)=\sum_{i=1}^{\infty}\rho_k \delta_{\theta_k}(\theta),\;\theta_k\sim H$\\
+$\Rightarrow G\sim DP(\alpha,H)$
 \subsection*{Gibbs Sampling}
 DP generative model: \\
 \begin{inparaitem}[\color{red}\textbullet]

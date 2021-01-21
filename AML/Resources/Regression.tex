@@ -72,7 +72,7 @@ $\text{bias}[\hat{f}(x)] = \frac{1}{B} \sum_{i=1}^{B} \text{bias}[\hat{f}_i(x)]$
 Bayesian prior: \(p(\beta_i) = \frac{1}{4\sigma^2}exp\left(-\vert\beta_i\vert\frac{\lambda}{2\sigma^2}\right)\)\\
 {Const. opt. \scriptsize  $\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}}$ s.t. $\norm{\beta}_1<s_\lambda$}
 \subsection*{Ridge regression}
-\(\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}} + \lambda\norm{\beta}_{2}\Rightarrow \hat{\beta}  =  \left(X^TX + \lambda I\right)^{-1}X^T y\) \\
+\(\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}} + \lambda\norm{\beta}_{2}^{2}\Rightarrow \hat{\beta}  =  \left(X^TX + \lambda I\right)^{-1}X^T y\) \\
 Bayesian prior \(p(\beta) = N(0, \frac{\sigma^2}{\lambda}I)\)\\ 
 \textbf{Oss:} if instead \(p(\beta) = N(0, \Lambda^{-1})\) then $\hat{\beta} = \left(X^TX + \sigma^2 \Lambda\right)^{-1}X^T y$\\
 {Const. opt. \scriptsize  $\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}}$ s.t. $\norm{\beta}_2<s_\lambda$}\\ 

@@ -15,11 +15,14 @@ Then \(\bar{b}(x)=
 %$E_D[L(y,h_D(x))]=E_D[(y-h_D(x))^2]=E_D[y^2]-2E_D[y\cdot h_D(x)]+E_D[h_D(x)^2]=y^2-2y\cdot E_D[h_D(x)]+E_D[h_D(x)^2]\geq y^2-2y\cdot E_D[h_D(x)]+E_D[h_D(x)]^2=y^2-2y\cdot h_A(x)+h_A(x)^2=(y-h_A(x))^2=L(y,h_A(x))$\\
 \textbf{Bias$\downarrow$ \& $\mathbb{V} \uparrow$}: By using complex decision trees\\
 \textbf{$\mathbb{V}\downarrow$}: By averaging them
+\subsubsection{Theorem:}
+if $|y|<\infty$ then $\exists M$ large enough s.t.\\
+$\mathbb{E}_{Z,Z',Y|x}\left[(Y-\bar{b}(x))^2\right]\leq \mathbb{E}_{Z,Z',Y|x}\left[(Y-b^{(i)}(x))\right]$
 
 \subsection*{Random Forest}
 Is a sort of bagging with decision trees. 
 At each splitting node we draw $m$ features and we pick the splitting one only among them ($\downarrow$ correletion among trees). 
-We also use Bootstrap
+For the same reason we also use Bootstrap 
 
 \subsection*{Adaboost}
 Boosting: Train weak learners sequentially on all data, but reweight misclassifed samples higher, Bias $\downarrow$\\

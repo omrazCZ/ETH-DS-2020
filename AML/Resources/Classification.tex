@@ -22,6 +22,7 @@ Directly look for:\\ \(c^{*} = \argmin_c\hat{\mathcal{R}}(c, \mathcal{Z}_{train}
 \subsection*{Percepton Algo} 
 Find \(w, w_0\) s.t. \(y_iw^tx_i > 0 \;\forall i\). Gradient descent on \(L(y,c(x))=-yw^Tx\mathbb{I}_{\left(-\inf, 0\right)}\left(yw^Tx\right)\)\\
 or {\scriptsize $L(y,c(x)) = \min_{\alpha_{1:n}} \sum_{i=1}^n \max  [0,- \sum_{j=1}^n \alpha_j y_i y_j x_i^T x_j ]$}
+$\Rightarrow \nabla_w L(y_{1:n},c(x_{1:n})) = -\sum_{i \text{ misscl.}}y_ix_i$
 
 \subsection*{Fischer Discriminant}
 \(w^{*} = \argmax_w \frac{w^TS_Bw}{w^TS_ww} = S_w^{-1}(\bar{x}_0-\bar{x}_1)\) where: \\

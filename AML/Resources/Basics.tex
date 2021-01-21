@@ -5,8 +5,8 @@ $f(x) = \frac{1}{\sqrt{(2\pi)^d\det\Sigma}} e^{- \frac{1}{2} (x-\mu)^T \Sigma^{-
 $X {\sim} \mathcal{N}(\mu,\Sigma),\;Y{=}A{+}BX \Rightarrow Y{\sim}\mathcal{N}(A{+}B\mu,B\Sigma B^T)$ 
 Conditionate Gaussians\\
 \(
-\begin{bmatrix} \beta \\ x \end{bmatrix} \sim N\left(\begin{bmatrix}\bar{\beta} \\ \bar{x}\end{bmatrix},\begin{bmatrix} \Sigma_{11}&\Sigma_{12} \\\Sigma_{21}&\Sigma_{22} \end{bmatrix}\right)
-\Rightarrow\beta\vert x=y \sim N\left(\bar{\beta} + \Sigma_{12}\Sigma^{-1}_{22}(y-\bar{x}, ) , \Sigma_{11}-\Sigma_{12}\Sigma^{-1}_{22}\Sigma_{21}\right)
+\begin{bmatrix} X_1 \\ X_2 \end{bmatrix} \sim \mathcal{N}\left(\begin{bmatrix}\bar{x}_1 \\ \bar{x}_2\end{bmatrix},\begin{bmatrix} \Sigma_{11}&\Sigma_{12} \\\Sigma_{21}&\Sigma_{22} \end{bmatrix}\right)
+\Rightarrow X_1\vert X_2=y \sim \mathcal{N}\left(\bar{x}_1 + \Sigma_{12}\Sigma^{-1}_{22}(y-\bar{x}_2, ) , \Sigma_{11}-\Sigma_{12}\Sigma^{-1}_{22}\Sigma_{21}\right)
 \)
 
 \subsection*{Primal Dual problem}

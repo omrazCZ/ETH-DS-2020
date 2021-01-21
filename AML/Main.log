@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.25)  14 JAN 2021 15:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.25)  20 JAN 2021 14:51
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1386,15 +1386,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 20--21
 
 {/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/SupportVectorMachine.tex
 
-LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 43.
+LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 44.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--57
+Underfull \hbox (badness 10000) in paragraph at lines 42--58
 []$[]
  []
 
 ) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/NonLinearSVM.tex) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/Ensemble.tex
-Overfull \hbox (3.40701pt too wide) in paragraph at lines 25--36
+Overfull \hbox (3.40701pt too wide) in paragraph at lines 28--39
 \T1/jkp/m/n/10 (-20) 2. Com-pu-te er-ror $[]\OML/jkp/m/it/10 ^^O[] \OT1/jkp/m/n/10 (-20) = [][] \OML/jkp/m/it/10 w[]\U/bbm/m/n/10 1[]\OML/jkp/m/it/10 = [][] w[]$[] 
  []
 
@@ -1404,12 +1404,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 26--2
  []
 
 ) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/NonParametricBayesian.tex) (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Resources/PACLearning.tex
-Overfull \hbox (11.37512pt too wide) in paragraph at lines 13--1
+Overfull \hbox (11.37512pt too wide) in paragraph at lines 17--1
 []\OML/jkp/m/it/10 p\OT1/jkp/m/n/10 (-20) (\OML/jkp/m/it/10 z[] \OT1/jkp/m/n/10 (-20) = \OML/jkp/m/it/10 k\OMS/jkp/m/n/10 j\OML/jkp/bx/it/10 z[]\OML/jkp/m/it/10 ; \OML/jkp/bx/it/10 x\OML/jkp/m/it/10 ; ; \OML/jkp/bx/it/10 ^^V\OT1/jkp/m/n/10 (-20) ) = []$[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--1
+Underfull \hbox (badness 10000) in paragraph at lines 17--1
 
  []
 
@@ -1418,20 +1418,20 @@ Underfull \hbox (badness 10000) in paragraph at lines 2--14
 
  []
 
-) [2] (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Main.aux) ) 
+) [2] [3] (/Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Main.aux) ) 
 Here is how much of TeX's memory you used:
- 24560 strings out of 480608
- 487586 string characters out of 5903630
- 829343 words of memory out of 5000000
+ 24564 strings out of 480608
+ 487621 string characters out of 5903630
+ 828343 words of memory out of 5000000
  39728 multiletter control sequences out of 15000+600000
- 637179 words of font info for 223 fonts, out of 8000000 for 9000
+ 637603 words of font info for 226 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  60i,12n,67p,880b,458s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc} </Users/marcomilanta/Library/texlive/2020/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.600pk> </Users/marcomilanta/Library/texlive/2020/texmf-var/fonts/pk/ljfour/public/bbm/bbm8.600pk>{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/kpfonts/kpfonts-expert.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/sourcesanspro/a_ggs4wk.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/adobe/sourcesanspro/SourceSansPro-Bold.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpbmi.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpbn8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpex.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmi.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmia.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmit8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmn8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmne.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpsy.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpsyb.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpsyc.pfb>
-Output written on /Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Main.pdf (2 pages, 182770 bytes).
+Output written on /Users/marcomilanta/Documents/ETH/ETH-DS-2020/AML/Main.pdf (3 pages, 184188 bytes).
 PDF statistics:
- 79 PDF objects out of 1000 (max. 8388607)
- 56 compressed objects within 1 object stream
+ 82 PDF objects out of 1000 (max. 8388607)
+ 58 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  26125 words of extra memory for PDF output out of 29859 (max. 10000000)
 
