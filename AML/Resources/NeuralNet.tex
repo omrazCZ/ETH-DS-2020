@@ -1,28 +1,22 @@
 
-\section{Neural Network}
+\section{Neural Networks}
 \subsection*{Backpropagation}
-Let $\Phi(x) = f^{(n)}_{\theta_n}\circ f^{(n-1)}_{\theta_{n-1}}\circ \dots \circ f^{(1)}_{\theta_{1}}(x)$\\
-$\partial_{\Phi}f^{(i)}\doteq\partial_z f^{(i)}(z,\theta_i)\vert_{z=\Phi^{(i-1)}(x)}$\\
-$\partial_{\theta}f^{(i)}\doteq\partial_z f^{(i)}(\Phi^{(i-1)}(x),\theta)\vert_{\theta = \theta_i}$
+$NN(x) = \alpha^{(d)} \circ L^{(d)} \circ ... \circ \alpha^{(1)} \circ L^{(1)}(x)$ \\
+$L$ linear trans. \& $\alpha$ (non)linear activ. func. \\
+$\frac{\partial C}{\partial w^{(l)}} = \frac{\partial C}{\partial a^{(d)}} \frac{\partial a^{(d)}}{\partial z^{(d)}} \frac{\partial z^{(d)}}{\partial a^{(d-1)}}\frac{\partial a^{(d-1)}}{\partial z^{(d-1)}} ... \frac{\partial z^{(l)}}{\partial w^{(l)}}$ \\
+yields $\frac{\partial C}{\partial w^{(l)}} = \frac{\partial C ^{T}}{\partial z^{(l)}} (a^{(l-1)})^T$ or $\frac{\partial C}{\partial b^{(l)}} = \frac{\partial C}{\partial z^{(l)}}$\\
+$C$ loss function, $a$ activation, $z$ affine transf., $w$ weights (matrix), $b$ bias
+%Sigmoid: $\sigma(x)=\frac{1}{1+e^{-x}}=\frac{e^{x}}{e^{x}+1}$
+%Tanh: $\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}$
 
+\subsection*{Stochastic Gradient Descent}
 \begin{algorithm}[H]
-    \KwResult{$\partial_{\theta_i}\Phi(x)\forall i$}
-    Initialize $B = 1$\;
-     \For{$i \gets n, n-1, \dots, 1$}{
-        $\partial_{\theta_i}\Phi(x) \gets B \partial_\theta f^{(i)}$\;
-        $B \gets B\partial_\Phi f^{(i)}$\;
-     }
-    \end{algorithm}
-Once we have this we can $\nabla \downarrow$ 
-\subsection*{Stocastic Gradient Descent}
-\begin{algorithm}[H]
-    \KwResult{optimal $\theta^*$}
-     Initialize $\theta$\;
-     \While{Test error is decreasing}{
-        $\nabla_\theta Loss = \sum_{(x,y)\in S_k}\nabla_\theta \mathcal{L}(NN(x),y)$\;
-        $\theta \gets \theta - \eta(k)\nabla_\theta Loss $\;
-     }
-    \end{algorithm}
-    \textbf{Oss:} $S_k \in D$ and changes at each iteration (Mini Batch)  \\
-    \textbf{Oss:} As long as $\sum_k \eta(k) = \infty$ and $\sum_k \eta^2(k) <  \infty$ the SGD converges\\  
-    \textbf{Advantages over Normal Gradient Descent:} 1) Can handle large Dataset 2) Faster improvment (with regards to time, not iterations) 3) Escapes local minima 4) Lower generalization error\\  
+  Initialize $\theta_0$\, define learning rate $\eta$ \\
+  \While{test error decrease/until converge.}{
+    $\nabla_{\theta_k} Loss = \sum_{(x,y)\in S_k}\nabla_{\theta_k} \mathcal{L}(NN(x),y)$\;
+    $\theta_{k} = \theta_{k-1} - \eta(k)\nabla_{\theta_k} Loss $\;
+  }
+\end{algorithm}
+    \textbf{Obs:} $S_k \in D$ and changes at each iteration (Mini Batch)  \\
+    \textbf{Obs:} As long as $\sum_k \eta(k) = \infty$ and $\sum_k \eta^2(k) <  \infty$ the SGD converges\\  
+    \textbf{Adv. over normal GD:} 1) can handle big datasets 2) faster improvement (with regards to time, not iterations) 3) escapes loc. min. 4) lower generaliz. error \textcolor{red}{But less grad. precision}

@@ -1,0 +1,60 @@
+\section{Non-parametric Regression}
+We want to estimate $m(x)=\mathbb{E}[Y\mid X = x]$
+\subsection{Nadaraya-Watson kernel method}
+$\hat m(x)=\frac{\sum_iK((x-x_i)/h)Y_i}{\sum_iK((x-x_i)/h)}$. $h$ is the bandwidth. $K$ is the kernel function
+\begin{codebox}{r}{Kernel method}
+ksmooth(x, y, kernel = "normal", bandwidth = 0.2, x.points = x)
+\end{codebox}
+\textbf{Local bandwidth} To improve one idea is to have $h(x)$ depend on $x$ and not be the same everywhere.
+\begin{codebox}{r}{Local bandwidth}
+library(lokern)
+lofit <- lokerns(cars$ speed, cars$ dist)
+\end{codebox}
+\textbf{Local polynomial:}
+A piecewise degree $d$ polynomial with continuity in dimensions $0, ..., d-1$. Generally has $(k+1)(d+1)$ parameters and $k\cdot d$ constraints, so $k+d+1$ degrees of freedom. (e.g. \textbf{piecewise cubic} has $4(k+1)$ parameters and $3k$ constraint, so $k+4$ degrees of freedom. Basis functions: $h(x, \xi)=(x-\xi)_+^3$ ($0$ for all values $\leq \xi$). $y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \gamma_1 h(x_i, \xi_1) + ... + \gamma_k h(x_i, \xi_k) + \epsilon_i$).\
+\begin{codebox}{r}{Local polynomials}
+model <- loess(y ~ x, span = 0.2971339), enp.target =df, surface="direct")# to predict non-train vals 
+# span is the degree of smoothing, enp.target sets the df. Specify span OR enp.target, NOT both!
+y_hat <- predict(model, newdata = x)
+\end{codebox}
+\textbf{Smoothing Splines:}\\ $G=\{ g:[a,b]\to \mathbb{R}: g'' \text{ exists and } \int_a^b g''(x)^2 dx < \infty \}$ is the class of functions to consider: $\hat g = \text{argmin}_{g\in G} \sum_{i=1}^n (y_i - g(x_i))^2 + \lambda \int_a^b g''(x)^2 dx$. Note: if $\lambda = 0$, $\hat g$ is any function in $G$ that passes through all data points. If $\lambda=\infty$, we get the least squares estimate. Shrunken version of natural spline with knots at $x_1, ..., x_n$. \\
+\begin{codebox}{r}{Smoothing splines}
+model <- smooth.spline(x, y, span = 0.2971339, df = 16, cv=T) #either specify span or df, not both!
+y_hat <- predict(model, x = x)$y
+\end{codebox}
+\subsection{Degrees of freedom}
+We define the hat matrix $\hat Y = \mathcal{S}Y$, for linear method. the degrees of freedom $df = \mathbf{tr}(\mathcal{S})$.\\
+\begin{codebox}{r}{Compute hat matrix}
+# Hat matrix "S.nw" to get degrees of freedom:
+Id <- diag(nrow(data))
+S <- matrix(0, nrow(data), nrow(data))
+for (j in 1:nrow(data))
+  S[, j] <- ksmooth(data[,"x"], Id[,j], x.point=data[, "x"], kernel="normal", bandwidth=4)$y
+df <- sum(diag(S)))
+\end{codebox}
+\iffalse
+\begin{codebox}{r}{Backfitting Algorithm for MLR}
+backfit <- function(x, y, n, p, o, eps) {
+  mu.hat <- mean(y) # Compute overall mean
+  g <- matrix(0, nrow=n, ncol=p) # Initialize g
+  converged <- FALSE
+  while(!converged) {
+    old.g <- g
+    beta0.hat <- mu.hat 
+    beta.hat <- numeric(p+1)
+    for(i in o) { # o: order e.g. 1:p
+      r <- y - mu.hat - rowSums(g[,-i])
+      fit <- lm(r~x[,i])
+      g[,i] <- fit$fitted
+      beta0.hat <- beta0.hat + fit$coeff[1]
+      beta.hat[1+i] <- fit$coeff[2]
+    }
+    if(max(colSums((old.g - g)^2)/colSums(old.g^2)) < eps) {
+      converged <- TRUE
+    }
+    beta.hat[1] <- beta0.hat
+  }
+  return(beta.hat)
+}
+\end{codebox}
+\fi

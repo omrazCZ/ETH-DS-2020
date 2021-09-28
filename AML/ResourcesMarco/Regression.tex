@@ -8,13 +8,13 @@
 Consistency: $\hat{\theta_n} \stackrel{\text{\tiny P}}{\rightarrow} \theta$,
 i.e. $\forall\epsilon P \{|\hat{\theta_n}-\theta| \geq\epsilon\} \stackrel{n \to\infty}{\longrightarrow} 0 $\\
 Asymptotic normality: $\sqrt{N}(\theta - \hat{\theta_n}) \to \mathcal{N}(0, J^{-1}IJ^{-1})$ \\
-Asymptotic efficiency: $\hat{\theta_n}$ reaches the Rao-Cramer bound in the limit, i.e. $\lim_{n\to\infty} (V[\hat{\theta_n}]\mathcal{I}_n(\theta))^{-1} = 1$
+Asymptotic efficiency: $\hat{\theta_n}$ reaches the Rar Cramer bound in the limit, i.e. $\lim_{n\to\infty} (V[\hat{\theta_n}]\mathcal{I}_n(\theta))^{-1} = 1$
 \subsection*{Rao-Cramer}
 $\Lambda = \frac{\partial \log \mathbb{P}(x|\theta )}{\partial \theta}$ (score function), $E[\Lambda ]=0$\\
 Fisher information: $\mathcal{I}(\theta)= \mathbb{V}[\Lambda]$ \\
 $\mathcal{J}= E[\Lambda^{2}]= -E[\frac{\partial^2 \log \mathbb{P}(x|\theta ) }{\partial \theta \partial \theta ^{T}}]= -E[\frac{\partial \Lambda}{\partial \theta}]$ \\
 If the model is realizable then $\mathcal{I}=\mathcal{J}$ \\
-\textbf{Obs:} For the whole model:\\ $\mathcal{I}_n = \mathbb{V}\left[\frac{\partial \log \mathbb{P}(x_i, i=1:n|\theta )}{\partial \theta}\right]=n\mathcal{I}$
+\textbf{Oss:} For the whole model:\\ $\mathcal{I}_n = \mathbb{V}\left[\frac{\partial \log \mathbb{P}(x_i, i=1:n|\theta )}{\partial \theta}\right]=n\mathcal{I}$
 
 let $b(\hat\theta) = \E\left[\hat\theta\right]-\theta$\\
 MSE bound: $E[(\hat \theta -\theta )^{2}] \geq \frac{[1 + b^{\prime} (\hat\theta)]^{2}}{n E[\Lambda ^{2}]} + {b(\hat\theta)}^{2}$ \\
@@ -55,9 +55,9 @@ Cauchy-Schwarz: $|E(XY)|^2 \leq E(X^2) E(Y^2)$
 \section{Linear Regression}
 \(y = X\beta + \epsilon\) where \(y \in \mathbb{R}^n, \;X \in \mathbb{R}^{n\times d},\;\beta \in \mathbb{R}^d\)
 
-\subsection*{Risk Decomposition Theorem (MSE)}
-\(\mathbb{E}_{Y,D}\left[ \left( Y-\hat{f}(x_0)\right) ^2 \right] = Bias^{2} + Variance + Noise\)\\
-\(Bias =\left(\mathbb{E}\left[Y\vert X=x_0\right]-\mathbb{E}_{D}\left[\hat{f}(x_0)\right]\right)\)\\
+\subsection*{Risk Decomposition Theorem}
+\(\mathbb{E}_{Y,D}\left[ \left( Y-\hat{f}(x_0)\right) ^2 \right] = Bias + Vairance + Noise\)\\
+\(Bias =\left(\mathbb{E}\left[Y\vert X=x_0\right]-\mathbb{E}_{D}\left[\hat{f}(x_0)\right]\right)^2\)\\
 \(Variance =  \mathbb{E}_{D}\left[ \left( \mathbb{E}_{D}\left[\hat{f}(x_0)\right]- \hat{f}(x_0)\right) ^2 \right]\)\\
 \(Noise =  \mathbb{E}_{Y}\left[\left(Y-\mathbb{E}\left[Y\vert X=x_0\right]\right)^2\right] \)
 \subsection*{Combination of Regression Models:}
@@ -65,20 +65,16 @@ $\text{bias}[\hat{f}(x)] = \frac{1}{B} \sum_{i=1}^{B} \text{bias}[\hat{f}_i(x)]$
 {\scriptsize $\mathbbm{V}[\hat{f}(x)] = \frac{1}{B^2}\sum_i \mathbbm{V}[\hat{f}_i(x)]
 + \frac{1}{B^2}\sum_{i\neq j} cov[\hat{f}_i(x), \hat{f}_j(x)] \approx \frac{\sigma^2}{B}$}
 \subsection*{Minimum square linear regression}
-\(\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}^2} \Rightarrow \hat{\beta} = \left(X^TX \right)^{-1}X^T y\). \\
-\(\hat{\beta}\) - Best Linear \textbf{Unbiased} Estimator (BLUE)
+\(\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}} \Rightarrow \hat{\beta} = \left(X^TX \right)^{-1}X^T y\). Here \(\hat{\beta}\) is the BLUE (Best Linear Unbiased Estimator)
 
-\subsection*{Ridge reg. (strictly convex, closed form sol.)}
-\(\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}^2} + \lambda\norm{\beta}^{2}_{2} \Rightarrow \\
-\hat{\beta} = \left(X^TX + \lambda I\right)^{-1}X^T y\) EV's of $X^TX$ incr. by $\lambda$\\
-Bayes: Gaussian prior \(p(\beta) = N(0, \frac{\sigma^2}{\lambda}I)\)\\ 
-\textbf{Obs:} if instead \(p(\beta) = N(0, \Lambda^{-1})\) then $\hat{\beta} = \left(X^TX + \sigma^2 \Lambda\right)^{-1}X^T y$\\
-{Const. opt. \scriptsize  $\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}^2}$ s.t. $\norm{\beta}^{2}_2<s_\lambda$}\\ 
-Let \(d_i\) be the singular values of \(X\) then \(\vert \left(X^TX \right)^{-1}X^T \vert = \prod^{i} \frac{1}{d_i}\) . And  \(\vert \left(X^TX + \lambda I \right)^{-1}X^T \vert =
- \prod^{i} \frac{d_i^2}{d_i^2 + \lambda}\). Therefore if \(d_i \simeq 0\) with Ridge we have no problems (stable results \textbf{protected against multi-colinearity})
-
-\subsection*{Lasso regression (Convex, Non-diffable)}
-\(\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}^2} + \lambda\norm{\beta}_{1} \\ \Rightarrow \)  \textbf{No closed form} solution for $\hat{\beta}$ (LARS algo)\\
-Gives \textbf{sparse solutions} $\Rightarrow$ interpretable  \\
-Bayes: Laplace prior \(p(\beta_i) = \frac{1}{4\sigma^2}exp\left(-\vert\beta_i\vert\frac{\lambda}{2\sigma^2}\right)\)\\
-{Const. opt. \scriptsize  $\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}^2}$ s.t. $\norm{\beta}_1<s_\lambda$}
+\subsection*{Lasso regression}
+\(\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}} + \lambda\norm{\beta}_{1}\Rightarrow \hat{\beta} =\)  No closed form (LARS algorithm) but it is a convex problem\\
+Bayesian prior: \(p(\beta_i) = \frac{1}{4\sigma^2}exp\left(-\vert\beta_i\vert\frac{\lambda}{2\sigma^2}\right)\)\\
+{Const. opt. \scriptsize  $\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}}$ s.t. $\norm{\beta}_1<s_\lambda$}
+\subsection*{Ridge regression}
+\(\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}} + \lambda\norm{\beta}_{2}\Rightarrow \hat{\beta}  =  \left(X^TX + \lambda I\right)^{-1}X^T y\) \\
+Bayesian prior \(p(\beta) = N(0, \frac{\sigma^2}{\lambda}I)\)\\ 
+\textbf{Oss:} if instead \(p(\beta) = N(0, \Lambda^{-1})\) then $\hat{\beta} = \left(X^TX + \sigma^2 \Lambda\right)^{-1}X^T y$\\
+{Const. opt. \scriptsize  $\hat{\beta} = \argmin_{\beta}{\norm{X\beta - y}}$ s.t. $\norm{\beta}_2<s_\lambda$}\\ 
+Let \(\mu_i\) be the singular values of \(X\) then \(\vert \left(X^TX \right)^{-1}X^T \vert = \prod^{i} \frac{1}{\mu_i}\) . And  \(\vert \left(X^TX + \lambda I \right)^{-1}X^T \vert =
+ \prod^{i} \frac{\mu_i^2}{\mu_i^2 + \lambda}\). Therefore if \(\mu_i \simeq 0\) with Ridge we have no problems (stable results against inter column linear dependence)

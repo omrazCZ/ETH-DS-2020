@@ -1,59 +1,53 @@
 % -*- root: Main.tex -*-
-\section{SVM (like perceptron, but max. margin)}
-\(P =
+\section{SVM} 
+Like Percepton but maximizing the margin. Equivalent to\\
+\(\mathcal{P} =
 \begin{cases}
-	\min_{w,w_0} \frac{1}{2} \norm{w}^2\\
+	\min_{w,w_0} \frac{\norm{w}^2}{2}\\
 	y_i(w^Tx_i +  w_0)\geq 1 \;\forall i\\
 \end{cases}
 \)
-margin size: \(\frac{2}{\norm{w}^2}\).\\
-\(\mathcal{L}(w, w_0, \alpha) = \frac{1}{2}||w||^2-\sum_{i = 1}^{n} \alpha_i(y_i(w^Tx_i+w_0) - 1)\)
-Stationarity constraints:
-\(\frac{d\mathcal{L}}{dw}=w-\sum_{i}\alpha_iy_ix_i = 0\)\\
-\(\frac{d\mathcal{L}}{dw_0}=-\sum_{i}\alpha_iy_i = 0\)\\
-$X^+, X^-$ are separable $\Rightarrow$ Slater's condition $\Rightarrow$ \\
-\(Dual =
+where the margin size is \(\frac{2}{\norm{w}^2}\).\\
+$X^+, X^-$ are separable $\Rightarrow$ Slater conditions $\Rightarrow$ \\
+\(\mathcal{D} =
 	\begin{cases}
 		\max_{\alpha} \sum_i \alpha_i - \frac{1}{2}\sum_{i,j}\alpha_i\alpha_jy_iy_jx_i^Tx_j\\
-		\alpha_i\geq 0 \;\forall i, \sum_{i}\alpha_i y_i = 0\\
+		\alpha_i\geq 0 \;\forall i\\
 	\end{cases}
 		\)\\
 Complementary slackness \(\alpha_i^*h_i(w^*)=0\) so either \(\alpha^*_i = 0\)  or \(x_i\) is a Support Vector
 \subsection*{Soft margin SVM}
 We add a C parameter (C small \(\Rightarrow\) soft):\\
-\(Primal =
+\(\mathcal{P} =
 \begin{cases}
-	\min_{w, w_0, \xi} \frac{1}{2} \norm{w}^2 + C\sum_{i=1}^n\xi_i\\
+	\min_{w,w_0, \xi} \frac{\norm{w}^2}{2} + C\sum_i\xi_i\\
 	y_i(w^Tx_i +  w_0)\geq 1 -\xi_i\;\forall i\\
 	\xi_i\geq 0\;\forall i\\
 \end{cases}
 \)\\
-\(\mathcal{L}(w, w_0, \xi, \alpha, \beta) = \frac{1}{2}||w||^2 + C\sum_{i=1}^n\xi_i - \sum_{i = 1}^{n} \alpha_i[y_i(w^Tx_i+w_0) - 1 + \xi_i] - \sum_{i=1}^n\beta_i\xi_i\)\\
-\(Dual =
+\(\mathcal{D} =
 \begin{cases}
 	\max_{\alpha_i}\sum_i \alpha_i - \frac{1}{2}\sum_{i,j}\alpha_i\alpha_jy_iy_jx_i^Tx_j\\
-	0\leq \alpha_i\leq C \;\forall i, \sum_{i}\alpha_i y_i = 0\\
+	0\leq \alpha_i\leq C \;\forall i\\
 \end{cases}
 \)\\
 \(\xi_i^{*} = \max(0,1-y_i({w^*}^Tx_i + w_0^*))\)\\
-$y = sgn\left({w^*}^Tx+w^{*}_{0}\right) =$ \\
-$sgn\left(\sum_i\alpha_i^*y_i(x_i^{T}*x) +w^{*}_{0}\right)$\\
-\textbf{non-lin. SVM: }$x_i^Tx_j \rightarrow \phi(x_i)^T\phi(x_j) \rightarrow k(x_i,x_j)$
+$y = sgn\left({w^*}^Tx\right) = sgn\left(\left(\sum_i\alpha_i^*y_ix_i)\right)^Tx_j \right)$\\
+\textbf{Non linear SVM: }$x_i^Tx_j \rightarrow \phi(x_i)^T\phi(x_j) \rightarrow k(x_i,x_j)$%Kernels \(k\) must be simmetric and: \\
+%\(\forall (x_i)_{i = 1:n}\in X^n ,\;\forall c\in\mathbb{R}\) holds that \(c^TKc \geq 0,\; K_{ij} = k(x_i, x_j)\)\\
 \subsection*{Multiclass SVM (ovr)}
 Train a binary classifier for each class (one vs the rest). Then I assign a score $f_c(x)=w_c^Tx$. Predicitons: $c^*=\argmax_c f_c(x)$
-\subsection*{Structured SVM (too many classes for ovr)}
-Joint feature map: $\Psi: X \times Y \rightarrow \mathbbm{R}^{m+d}$
+\subsection*{Structured SVM}
+Too many class for ovr. $\Psi: X \times Y \rightarrow \mathbbm{R}^{m+d}$ is called Joint feature map
 \( 
-	Primal = \scriptsize
+	\mathcal{P}= \scriptsize
 \begin{cases}
-	\min_{w, \xi} \frac{1}{2}\norm{w}^2 + C\sum_{i=1}^n \xi_i \text{ \textcolor{red}{ (C may be divided by n)}}\\
-	w^T\Psi(x_i,y_i) - w^T\Psi(x_i,y) \geq \Delta(y_i,y) -\xi_i\;\forall i\; \forall y \neq y_i\\
-	\xi_i \geq 0 \;\forall i\\
+	\min_{w,w_0} \frac{\norm{w}^2}{2} + \frac{C}{n}\sum_{i=1}^n \xi_i\\
+	w^T\Psi(x_i,y_i)\geq \Delta(y_i,y') + w^T\Psi(x_i,y') -\xi_i\;\forall i\; \forall y' \neq y_i\\
+	\xi \geq 0 \;\forall i\\
 \end{cases}
 \)
-Let \(\mathbbm{K}_i = \mathbbm{K}\setminus\{z_i\}\) , then  \(\mathcal{L}(w, \xi, \alpha, \beta) = \frac{1}{2}||w||^2 + C\sum_{i=1}^n\xi_i - \sum_{i=1}^{n}\textcolor{red}{\sum_{y_j\in\mathbb{K}_i}} \alpha_{ij}[w^T(\Psi(x_i,y_i) - \Psi(x_i,y_j)) - \Delta(y_j, y_i) + \xi_i] - \sum_{i=1}^n\beta_i\xi_i\)\\
-Prediction: $c^*=\argmax_c w^{T}\Psi(x, y)$\\
-Theorem \(\Delta\) as Loss (SSVM in Stat. Learning):\\
+Theorem \(\Delta\) as Loss (Structured SVM in Statistical Learning):\\
 $\hat{\mathcal{R}}(\mathcal{Z}_{train})\doteq \frac{1}{n} \sum_{i=1}^n \Delta(y_i, c_{w^*}(x_i)) \leq \frac{1}{n}\sum_{i=1}^n \xi^*_i$
 % \subsection*{Kernelized SVM}
 % $

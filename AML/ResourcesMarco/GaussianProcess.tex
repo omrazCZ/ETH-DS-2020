@@ -5,8 +5,11 @@ $\left[f(x_1)\dots f(x_n)\right]\sim N(\left[\mu(x_1)\dots \mu(x_n)\right], K)$\
 % A GP $\{X_t\}_t$ is a collection of random variables from which any finite sample has a joint Gaussian distribution.\\
 % For any finite set of points $T=\{t_1, \dots, t_n\}$ from a GP, it hold that $(X_{t_1}, \dots,X_{t_n})\sim \mathcal{N}(\pmb{\mu_T},\pmb{\Sigma_T})$ with $\pmb{\mu_T} = (\mu(t_1),\dots,\mu(t_n))$, $\pmb{\Sigma_T}(i,j)=k(X_{t_i},X_{t_j})$
 \subsection*{Gaussian Process Regression}
-$\begin{bmatrix} f \\ f* \end{bmatrix} \sim \mathcal{N}\left( \begin{bmatrix} \mu \\ \mu * \end{bmatrix}, \begin{bmatrix} K & K* \\\ K*^{T}&K** \end{bmatrix}\right)$, \\ then: $f*\vert f, X*, X  \sim \mathcal{N}(\tilde{\mu},\tilde{K})$\\
-$\tilde{\mu} = \mu* + K*^T K^{-1}(f - \mu)$,   $\tilde{K} = K** - K*^{T} K^{-1} K*$
+$f\sim GP(\mu,k)$ then: $f\vert y_{1:n},x_{1:n} \sim GP(\tilde{\mu},\tilde{k})$\\
+$\tilde{\mu}(z) = \mu(z) + K_{D, z}^T{(K_{DD}+\epsilon I_n)}^{-1}\left(y_{1:n}-\mu({x_{1:n})}\right)$\\
+$\tilde{k}(z_1,z_2) = k(z_1,z_2) - K_{D, z_1}^T{(K_{DD}+\epsilon I_n)}^{-1} K_{D, z_2}$\\
+Where: $K_{D,z} = {\left[k(x_1,z)\dots k(x_n,z)\right]}^T$\\
+${\left[K_{DD}\right]}_{ij} = k(x_i, x_j)$
 
 
 %$p\big(\begin{bmatrix}
@@ -29,21 +32,19 @@ $\tilde{\mu} = \mu* + K*^T K^{-1}(f - \mu)$,   $\tilde{K} = K** - K*^{T} K^{-1} 
 %$l(Y|\theta) = -\frac{n}{2} \log(2\pi) - \frac{1}{2} \log |C_n| - \frac{1}{2} Y^T C_n^{-1}Y$\\
 %Set of hyperparameters $\theta$ determine parameters $C_n$. Gradient descent: $\nabla_{\theta_i}l(Y|\theta) = -\frac{1}{2}tr(C_n^{-1} \frac{\partial C_n}{\partial \theta_i}) + \frac{1}{2} Y^T C_n^{-1} \frac{\partial C_n}{\partial \theta_i} C_n^{-1} Y$
 
-\subsection*{Kernels}
+\subsection{Kernels}
 	$k(x,y)$ is a kernel if it's symmetric semidefinite positive:\\
 	$\forall \left\{x_1, \dots, x_n \right\}$ then for the Gram Matrix \\
 	${\left[K\right]}_{ij}=k(x_i,x_j)$ holds $c^TKc\geq0\forall c$\\
 	Closure Properties: {\tiny psd prop. closed under pointwise limits (since each $K_n$ is a kernel)} \\
-    $k(x,y) = k_1(x,y) + k_2(x,y)$; $k(x,y) = k_1(x,y)k_2(x,y)$; $k(x,y) = ck_1(x,y)$ where $c>0$\\
+    $k(x,y) = k_1(x,y) + k_2(x,y)$, $k(x,y) = k_1(x,y)k_2(x,y)$\\
 	$k(x,y) = f(x)f(y)$, $k(x,y) = k_3(\phi(x),\phi(y))$\\
     $k(x,y) = \exp(\alpha k_1(x,y)), \alpha > 0$, $|X \cap Y| = kernel$\\
 	$k(x,y) = p(k_1(x,y)), \, p(\cdot)$ {\tiny\text{polynomial with pos. coeff.}}\\   
-	$k(x,y)=k_1(x,y)/ \sqrt{(k_1(x,x) k_1(y,y)}$ \\
-	Linear: $k(x,y) = x^Ty(+c)$ \\
-	Gaussian (RBF): $k(x,y) = \exp( -\tfrac{||x-y||^2}{2\sigma^2})$ {\tiny inf.dim.} \\
-	Laplace: $k(x,y) = \exp( -\tfrac{||x-y||}{\sigma})$ \\
-	Sigmoid: $k(x,y) = \tanh(\alpha\cdot x^Ty - b)$ {\tiny\text{not valid for $\forall \alpha,b$}} \\
-	Polynomial: $k(x,y) = (x^Ty {+} c)^d$,$d\in N$,$c\geq0$ \\
+	$k(x,y)=k_1(x,y)/ \sqrt{(k_1(x,x) k_1(y,y)}$\\
+	Gaussian (rbf): $k(x,y) = \exp( -\tfrac{||x-y||^2}{2\sigma^2})$ {\tiny inf.dim.}\\
+	Sigmoid: $k(x,y) = \tanh(k\cdot x^Ty - b)$ {\tiny\text{not valid for $\forall k,b$}} \\
+	Polynomial: $k(x,y) {=} (x^Ty {+} c)^d$,$d\in N$,$c\geq0$ \\
 	Periodic: $k(x,y) = \sigma ^2 exp(\frac{2\sin ^2 (\pi |x-y|/p)}{\ell ^2})$
 
 % \subsubsection*{Polynomial kernel}

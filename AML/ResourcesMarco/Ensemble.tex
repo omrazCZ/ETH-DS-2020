@@ -1,37 +1,33 @@
 % -*- root: Main.tex -*-
-\section{Ensemble methods}
+\section{Ensemble method}
+
 \subsection*{Bagging}
-We train $b^{(1)}, \dots, b^{(M)}$ different classifiers. \\
-Then \(\bar{b}(x)=
+We train $b^{(1)}, \dots, b^{(M)}$ different classifiers. Then \(\bar{b}(x)=
 \begin{cases}
 	\frac{1}{M}\sum_{i = 1}^n b^{(i)}(x) & \text{regression}\\
 	\text{majority}\left(b^{(i)}\right)  & \text{classification}\\
 \end{cases}\)
-\textbf{Works if:} the $b^{(i)}$ are diverse and almost ind.
-(bootstrap used to reduce Covar. among $b^{(i)}$)\\
+\textbf{Works}: Covariance small (different subset for training or bootstrap), Variance small (similar behaviour of weak learners), biases weakly affected.\\
 %\textbf{Bag. aggr. pred.}: $h_B(x)=E_{D'\sim D}[h_{D'}(x)]$\\
 %\textbf{Ideal aggr. pred.}: $h_A(x)=E_{D\sim P(x,y)}[h_D(x)]$\\
 %$E_D[L(y,h_D(x))]=E_D[(y-h_D(x))^2]=E_D[y^2]-2E_D[y\cdot h_D(x)]+E_D[h_D(x)^2]=y^2-2y\cdot E_D[h_D(x)]+E_D[h_D(x)^2]\geq y^2-2y\cdot E_D[h_D(x)]+E_D[h_D(x)]^2=y^2-2y\cdot h_A(x)+h_A(x)^2=(y-h_A(x))^2=L(y,h_A(x))$\\
-Using complex decision trees: \textbf{Bias$\downarrow$ \& Var$\uparrow$}\\
-Averaging them: \textbf{Var $\downarrow$}
-
-\subsection*{Random Forest (bagging with decision trees)}
-At each split: draw $m$ features and split among 1 of them ($\downarrow$ correlation among trees - prevents overfitting) \& bootstrap datasets.
-$\mathbb{E}_{Z, Z', Y|x}[(Y - b(x)^{2})] = \\ \mathbb{E}_{Z, Z_1', Z_2', ..., Z_m', Y|x}[(Y - {b}^{(M)}(x)^{2})] + \mathbb{V}_{Z, Z'}(b(x))$ \\
-for large m, $b$ is single tree, $b^{(M)}$ is ensemble
+\textbf{Bias$\downarrow$\&Var.$\downarrow$}: Use complex decision tree (bias$\downarrow$), ensemble mult. decision trees (var$\downarrow$)
+\subsection*{Random Forest}
+Is a sort of bagging with decision trees. 
+At each splitting node we draw $m$ features and we pick the splitting one only among them ($\downarrow$ correletion among trees). 
+We also use Bootstrap
 \subsection*{Adaboost}
 Boosting: Train weak learners sequentially on all data, but reweight misclassifed samples higher, Bias $\downarrow$\\
 Initialize weights $w_i = 1/n$, for b=1:B do:\\
 1. Fit classifier $c_b(x)$ with weights $w_i$\\
-2. Compute error $\epsilon_b = \sum_i w_i^{(b)} \mathbbm{1}_{[c_b(x_i) \not = y_i]}$ \\
+2. Compute error $\epsilon_b = \sum_i w_i^{(b)} \mathbbm{1}_{[c_b(x_i) \not = y_i]} / \sum_i w_i^{(b)}$\\
 3. Compute coeff. $\alpha_b = log(\frac{1-\epsilon_b}{\epsilon_b})$\\
-4. Update weights $w_i = w_i \exp(\alpha_b \mathbbm{1}_{[y_i \not = c_b(x_i)]})$ \\
-5. Normalize weights \\
+4. Update weights $w_i = w_i \exp(\alpha_b \mathbbm{1}_{[y_i \not = c_b(x_i)]})$
 Return $\hat{c}_B(x) = \text{sign} \left ( \sum_{b=1}^B \alpha_b c_b(x) \right )$\\
 Loss: Exponential loss $L(y,y')=exp(-yy')$\\
-Model: Forward Stagewise Additive.\\
-\textbf{Obs:} Random Forest and Adaboost are spiky (prevent influence from noise) and interpol. (fit complex signals) models.\\
-AdaBoost trains max-margin classifiers.
+Model: Forward Sationary Adaptive.\\
+Oss: Self averaging algos that train Spiky interpolating classifiers.\\
+AdaBoost trains max-margin classifier.
 
 %\newpage
 

@@ -1,10 +1,6 @@
 \section{Nonparametric Bayesian methods}
-$Dir(x|\alpha) = \frac{1}{B(\alpha)} \prod_{k=1}^n x_k^{a_k - 1}$, $B(\alpha) = \frac{\prod_{k=1}^n \Gamma(\alpha_k)}{\Gamma(\sum_{k=1}^n \alpha_k)}$ \\
-de Finetti: $p(X_1, ..., X_n) {=} \int (\prod_{i=1}^n p(x_i|G))dP(G)$ \\
-Stick breaking: $\beta_k \sim Beta(1, \alpha)$, $\rho _k = \beta _k (1 - \sum_{i=1}^{k-1} \rho_{i})$ means $\rho \sim GEM(\alpha)$ \\
-Then $G(\theta) = \sum_{k=1}^{\infty} \rho_{k} \delta_{\theta_{k}} (\theta)$ with $\theta_k \sim H$ means $G \sim DP(\alpha, H)$
-
-\subsection*{Chinese Restaurant Process}
+$Dir(x|\alpha) = \frac{1}{B(\alpha)} \prod_{k=1}^n x_k^{a_k - 1}$, $B(\alpha) = \frac{\prod_{k=1}^n \Gamma(\alpha_k)}{\Gamma(\sum_{k=1}^n \alpha_k)}$ 
+\subsection*{Chinese Restourant Process}
 \(
    p(\text{cust}_{n+1} \text{ joins table } \tau\vert\mathcal{P})=
    \begin{cases}
@@ -12,11 +8,12 @@ Then $G(\theta) = \sum_{k=1}^{\infty} \rho_{k} \delta_{\theta_{k}} (\theta)$ wit
       \frac{\alpha}{\alpha + n} \;\tau\notin\mathcal{P} 
    \end{cases}
 \)\\ 
-Asymptotic expected no. of tables = $\alpha log(n)$ 
-\subsection*{Collapsed Gibbs Sampling}
+de Finetti: $p(X_1, ..., X_n) {=} \int (\prod_{i=1}^n p(x_i|G))dP(G)$ 
+\subsection*{Gibbs Sampling}
 DP generative model: \\
 \begin{inparaitem}[\color{red}\textbullet]
 \item Centers of the clusters: $\mu_k \sim \mathcal{N}(\mu_0, \sigma_0)$ \\
+\item Prob.s of clusters: $\rho = \left\{\rho_k\right\}_{k=1}^\infty \sim  GEM(\alpha)$ \\
 \item Assignments to clusters: $z_i \sim Categorical(\rho)$ \\
 \item Coordinates of data points: $\mathcal{N}(\mu_{z_i}, \sigma)$\\
 \end{inparaitem}
@@ -27,4 +24,3 @@ DP generative model: \\
       \frac{\alpha}{\alpha + N - 1} p(x_i|\bm{\mu}) \;\text{otherwise}
    \end{cases}
 \)
-$p(x_i|\bm{x}_{-i,k},\bm{\mu}) = \frac{p(x_i, \bm{x}_{-i, k}|\bm{\mu})}{p(\bm{x}_{-i, k}|\bm{\mu})}$

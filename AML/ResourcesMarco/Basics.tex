@@ -1,44 +1,32 @@
-\section{Basics\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space\space \color{myorange}Gaussians}
-
+\section{Basics}
+\subsection*{Gaussian}
 $f(x) = \frac{1}{\sqrt{(2\pi)^d\det\Sigma}} e^{- \frac{1}{2} (x-\mu)^T \Sigma^{-1} (x-\mu)},\quad \mathcal{N}(x|\mu, \Sigma)$\\
-$X {\sim} \mathcal{N}(\mu,\Sigma),\;Y{=}A{+}BX \Rightarrow Y{\sim}\mathcal{N}(A{+}B\mu,B\Sigma B^T)$
-$E[X^2] = Var(X) + E[X]^2$ (from variance eq.)
-
-Conditional Gaussians\\
+$X {\sim} \mathcal{N}(\mu,\Sigma),\;Y{=}A{+}BX \Rightarrow Y{\sim}\mathcal{N}(A{+}B\mu,B\Sigma B^T)$ 
+Conditionate Gaussians\\
 \(
-\begin{bmatrix} x \\ y \end{bmatrix} \sim N\left(\begin{bmatrix}\mu_x \\ \mu_y\end{bmatrix},\begin{bmatrix} \Sigma_{xx}&\Sigma_{xy} \\\Sigma_{yx}&\Sigma_{yy} \end{bmatrix}\right) \Rightarrow
-\)\\
-\(
-x\vert y \sim \mathcal{N}\left(\mu_x  + \Sigma_{xy}\Sigma^{-1}_{yy}(y -\mu_{y}), \Sigma_{xx}-\Sigma_{xy}\Sigma^{-1}_{yy}\Sigma_{yx}\right)
-\)\\
-\(
-y\vert x \sim \mathcal{N}\left(\mu_y  + \Sigma_{yx}\Sigma^{-1}_{xx}(x -\mu_{x}), \Sigma_{yy}-\Sigma_{yx}\Sigma^{-1}_{xx}\Sigma_{xy}\right)
-\)\\
-Completing The Square \\
-$log \mathcal{N}(\mu, \Sigma) \propto -\frac{1}{2} x^{T}Ax + x^{T}b + const$ \\
-$A = \Sigma ^{-1}$, $b = \Sigma ^{-1} \mu$ \\
-$Cov(X,Y)=E[(x-EX)(Y-EY)]=E[XY]-(EX)(EY)$
-
-\subsection*{Constrained Optimization}
-Let \(Primal = 
+\begin{bmatrix} \beta \\ x \end{bmatrix} \sim N\left(\begin{bmatrix}\bar{\beta} \\ \bar{x}\end{bmatrix},\begin{bmatrix} \Sigma_{11}&\Sigma_{12} \\\Sigma_{21}&\Sigma_{22} \end{bmatrix}\right)
+\Rightarrow\beta\vert x=y \sim N\left(\bar{\beta} + \Sigma_{12}\Sigma^{-1}_{22}(y-\bar{x}, ) , \Sigma_{11}-\Sigma_{12}\Sigma^{-1}_{22}\Sigma_{21}\right)
+\)
+\subsection*{Primal Dual problem}
+Let \(\mathcal{P} = 
 	\begin{cases}
 		\min_w f(w)\\
 		g_i(w)=0\;\forall i\\
 		h_j(w)\leq 0\;\forall j\\
 	\end{cases}
 	\)\\
-Then Slater's condition is:\\
+Then the Slater's conditions are:\\
 \(\exists w\; \vert g_i(w) = 0, h_j (w) < 0 \;\forall i,j\)\\
 The lagrangian is:\\
 \(\mathcal{L}(w,\lambda,\alpha)=f(w) + \sum_i\lambda_ig_i(w) + \sum_j \alpha_jh_j(w)\)\\
-\(Dual = 	
+\(\mathcal{D} = 	
 \begin{cases}
 	\max_{\lambda,\alpha} \theta(\alpha, \lambda)\\
 	\theta(\alpha, \lambda) = \min_w \mathcal{L}(w,\lambda,\alpha)\\
 	\alpha_j(w)\geq 0\;\forall j\\
 \end{cases}
 \)\\
-In general the solution of the \(\mathcal{D}\) is smaller then $\mathcal{P}$. But if Slater's condition holds then they are equal. And we get the complementary slackness: \(\alpha_j^*h_j(w^*) = 0\;\forall\) \\
+In general the solution of the \(\mathcal{D}\) is smaller then $\mathcal{P}$. But if the Slater conditions holds then they are equal. And we get the complementary slackness: \(\alpha_j^*h_j(w^*) = 0\;\forall\) \\
  The optimal $w^{*} = min_w {\mathcal{L}(w,\lambda^*,\alpha^*)}$
 %General p-norm: $\norm{ x }_p = (\sum_{i=1}^n |x_i|^p)^{1/p}$
 
@@ -53,8 +41,7 @@ In general the solution of the \(\mathcal{D}\) is smaller then $\mathcal{P}$. Bu
 %\item $Cov[aX,bY]{=}abCov[X,Y]$ \\
 %\item $K_{\bm{XY}} = cov(X,Y) = E[XY^T] - E[X]E[Y^T]$
 %\end{inparaitem}
-\subsection*{Calculus \hbox{ } \color{red}\textbullet \hbox{ } $(\mathbf{AB})^T=\mathbf{B}^T\mathbf{A}^T$
-	\color{red}\textbullet \hbox{ }$ (\mathbf{AB})^{-1}=\mathbf{B}^{-1}\mathbf{A}^{-1}$}
+\subsection*{Calculus}
 \begin{inparaitem}[\color{red}\textbullet]
 	%\item Part.: $\int u(x)v'(x) dx = u(x)v(x) - \int v(x)u'(x) dx$\\
 	%\item Chain r.: $\frac{f(y)}{g(x)} = \frac{dz}{dx} \Big|_{x=x_0}= \frac{dz}{dy}\Big|_{z=g(x_0)}\cdot \frac{dy}{dx} \Big|_{x=x_0}$ \\
@@ -72,22 +59,23 @@ In general the solution of the \(\mathcal{D}\) is smaller then $\mathcal{P}$. Bu
 	\item $x^T A x = Tr(x^T A x) = Tr(x x^T A) = Tr(A x x^T)$ \\
 	\item $\tfrac{\partial}{\partial A} Tr(AB) {=} B^T$
 	\item $\frac{\partial}{\partial A} log|A| {=} A^{-T}$ \\
-	\item $\sigma(x) = \frac{1}{1+e^{-x}}$ 
-	\item $\frac{\partial}{\partial \mathbf{\beta}}(Y-X\beta)^2 = -2(Y-X\beta)^TX$ \\
+	\item $\sigma(x) = \frac{1}{1+e^{-x}}$ \\
 	\item $\nabla \sigma(x) = \sigma(x)(1-\sigma(x)) = \sigma(x)\sigma(-x)$\\
 	\item $\nabla \text{tanh}(x) = 1-\text{tanh}^2(x)$ 
-	\item $tanhx {=} \frac{sinhx}{coshx} {=} \frac{e^{x}-e^{-x}}{e^{x} + e^{-x}}$
+	\item $tanhx {=} \frac{sinhx}{coshx} {=} \frac{e^{x}-e^{-x}}{e^{x} + e^{x}}$
 \end{inparaitem}
-Newton's Method:
-$x^{(k+1)} \gets x^{(k)}-H^{-1}_F\nabla F$
 \subsection*{Probability / Statistics}
 \begin{compactdesc}
-	\item[Bayes' Rule:]$ P(x|y) = \frac{P(y|x)P(x)}{P(y)}=\frac{P(y|x)P(x)}{\sum_x P(y|x)P(x)}$\\
+	\item[Bayes' Rule]$ P(Y|X) = \frac{P(X|Y)P(Y)}{P(X)}\frac{P(X|Y)P(Y)}{\sum\limits^k_{i=1}P(X|Y_i)P(Y_i)}$\\
+	\item[MGF] $\mathbf{M}_X(t)=\mathbb{E}[e^{\mathbf{t}^T \mathbf{X}}]$, $\mathbf{X}=(X_1,.., X_n) $
 \end{compactdesc}
 
 Markov ineq: $P\{X\geq\epsilon\} \leq \tfrac{\mathbb{E}[X]}{\epsilon}$ (for nonneg. X) \\
 Boole's inequality: $P(\bigcup_i A_i) \leq \sum_i P(A_i)$ \\
+Hoeffding's lemma: $\mathbb{E}[e^{sX}] \leq exp(\tfrac{1}{8}s^2(b-a)^2)$ where $\mathbb{E}[X]=0$, $P(X\in[a,b])=1$ \\
+Hoeffding's: $P\{S_n {-} \mathbb{E}[S_n] {\geq} t\} {\leq} exp({-} \frac{2t^2}{\sum_i (b_i - a_i)^2})$ \\
+Normalized: $P\{\widetilde{S}_n {-} \mathbb{E}[\widetilde{S}_n] {\geq} \epsilon\} {\leq} exp({-} \frac{2n^2 \epsilon ^2}{\sum_i (b_i {-} a_i)^2})$ \\
 {\small Error bound: \\$P\{ \sup\limits_{c\in\mathcal{C}}|\hat{\mathcal{R}}_n(c) - \mathcal{R}(c)| > \epsilon \} \leq 2|\mathcal{C}| exp(-2n\epsilon ^2)$} 
 
-\subsection*{Jensen's inequality (for convex functions $\varphi$)}
-	$\varphi(\mathbb{E}[X]) \leq \mathbb{E}[\varphi(X)]$ ($X$ is a random variable)
+\subsection*{Jensen's inequality}
+	X:random variable \& $\varphi$:convex function $\rightarrow$ $\varphi(\mathbb{E}[X]) \leq \mathbb{E}[\varphi(X)]$

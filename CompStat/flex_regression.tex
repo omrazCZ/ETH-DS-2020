@@ -1,0 +1,92 @@
+\section{Flexible regression}
+Making some structural assumption, we estimate 
+\begin{equation*}
+    g(x)=\begin{cases}
+    \mathbb{E}[Y\mid x]&\text{in regression}\\
+    \text{logit}(\pi(x))&\text{in classification}
+    \end{cases}
+\end{equation*}
+\subsection{Additive model}
+In additive model we assume that \\
+\begin{center}
+    $g(x)=\mu +\sum_jg_j(x_j)$ {} {} {} {} {}    $\E[g_j(x_j)]=0\quad \forall j$\\
+\end{center}
+To find $\hat g_j$ we use \textbf{backfitting}:
+Let $s_j: (u_1,...,u_n)^T \to (\hat u_1,...,\hat u_n)^T$ be a smoother (e.g. multiple linear regression). Order influences \#iterations\\
+Initialize $\hat \mu = \frac 1 n \sum_{i=1}^n y_i$, \quad $\hat g_j = 0 \quad \forall j$\\
+Do until convergence:\\
+$\quad \text{for each } j=1,...p$:\\
+$\quad \quad \hat g_j \gets s_j(y - \hat \mu \mathbb{1} - \sum_{k \neq j} \hat g_k)$\\
+$\quad \quad \hat g_j \gets \hat g_j - \frac 1 n \sum_{i=1}^n \hat g_j(x_{ij}) \vec{1} $\\
+\begin{codebox}{r}{GAM (generalized additive model)}
+library(mgcv)
+fitA <- gam(y ~ x_1+ x_2 + x_3, data = mydata)
+predicted_y <- predict(fitA, testdata)
+\end{codebox}
+
+\subsection{MARS (Multivariate Adaptive Regression Splines)}
+We make a regression with functions in $\mathcal{M}$. We start with $\mathcal{M}=\{h_0(\cdot)=1\}$. We then iteratively add functions in $\mathcal{M}$ in the form:
+\begin{center}
+$h_{\text{new},1-2}(x)=h_l(x)(\pm x_j\mp d)_+$
+\end{center}
+Where $h_l$ is in $\mathcal{M}$. We than prune back useless staff.
+\begin{codebox}{r}{MARS}
+library(earth)
+Mfit <- earth(y ~ ., data = mydata, degree = 3) # no. of interactions
+\end{codebox}
+\subsection{Neural networks}
+\begin{codebox}{r}{Neural nets in R}
+library(nnet)
+Nfit <- nnet(log.O3 ~ ., data = sc.ozone,
+  size = 3,# n hidden layer
+  decay = 4e-4,# regularization parameter
+  skip=T)#add direct lin. params from input to output
+  # other useful params: linout, softmax
+\end{codebox}
+\subsection{Projection pursuit regression}
+\begin{center}
+$g_{PPR}(x)=\mu + \sum_{k=1}^qf_k\left(\sum_{j=1}^p\alpha_{jk}x_j\right)$, where\\
+$\Vert\alpha_k\Vert=1,\qquad\E\left[f_k\left(\sum_{j=1}^p\alpha_{jk}x_j\right)\right] =0,Var(f_k\left(\sum_{j=1}^p\alpha_{jk}x_j\right)) =1$
+\end{center}
+$f_k$ are called ridge functions. Backfitting to find $f_k$.
+\begin{codebox}{r}{Projection pursuit regression in R}
+fit <- ppr(y ~ . , data = dataset, nterms = 4)
+#nterm is q (no. of terms to include in final model)
+\end{codebox}
+
+\subsection{CART (Classification and regression trees)}
+The tree devides the domain in rectangles, in the end you have a piece-wise constant function. \\
+$g_{\text{tree}}(x)=\sum_{r=1}^M\beta_r \mathbb{I}_{\mathcal{R}_m}(x)$\\
+We can penalize larger tree to reduce variance. We choose the simplest model which is within standard error to the best one in cross-validation.
+To fit we are greedy. \textbf{Pros} and \textbf{cons}:\\
+$\bigcdot$ Highly flexible and interpretable\\
+$\bigcdot$ Too simplistic, only piece-wise constant\\
+$\bigcdot$ Prone to overfitting 
+\begin{codebox}{r}{CART in R}
+library(rpart)
+rpart(y ~ ., data = data, control = rpart.control(cp = 0.0, minsplit = 30)) #minsplit: min no. of datapoints in a node to attempt a split
+#cp = complexity factor, the R^2 must increase at least of a factor cp after split 
+plotcp(tree) or printcp(tree) #estimate the best cp
+prune.rpart(tree, cp=cp.opt) #to prune the tree
+\end{codebox}
+We are in the situation where $p>>n$.\\
+\textbf{Ridge/Lasso regression:} We center and scale all the $x_i$ so that we can penalize all $\beta_i$ equally. In Ridge we penalize with $\Vert\beta\Vert_2^2$, in Lasso $\Vert\beta\Vert_1$.\\
+\textbf{Elastic net} Mix of Ridge and Lasso, the regularization is\\
+$\lambda_2\Vert\beta\Vert_2^2+\lambda_1\Vert\beta\Vert_1$. We call $\alpha = \frac{\lambda_2}{\lambda_1+\lambda_2}$. \\
+
+
+
+
+\textbf{Adaptive lasso:} First you get an estimate of $\hat \beta$. Then we penalize more $\beta_i$ we think they are $0$, we set $w_j=\vert\beta\vert^{-\gamma}$. The regularization term will be $\lambda\sum_j w_j\vert\beta_i\vert$. \\
+\text{Relaxed Lasso:} Like lasso but we use $\phi\lambda$ instead of $\lambda$ ($\phi \in [0,1]$). We then take out variables we don't need.\\
+\textbf{Group Lasso:} Predictors are divided into $L$ groups of size $p_1, ..., p_L$ s.t. $\sum p_i = p$. $\hat\beta_\lambda^{gr.lasso}=\text{argmin}_\beta RSS(\beta)+\lambda \sum_{l=1}^L \sqrt{p_l} ||\beta||_2$ (if $L=p$, we get Lasso). Acts like Lasso on a group level. Useful if there are categorical variables with $>2$ categories (put all corresponding dummy variables in a group).\\
+
+\begin{codebox}{r}{Ridge \& Lasso}
+library(glmnet) # data must be a MATRIX!
+grid <- 10^seq(from=10,to=-2,length=100)
+ridge <- glmnet(x[train,], y[train], alpha=0, lambda=grid)
+lasso <- glmnet(x[train,], y[train], alpha=1, lambda=grid)
+# Coefficients for specific lambda_val
+coef(lasso, s=lambda_val)
+cv.glmnet(mm, y, alpha=0.5, nfolds=10)#For inbuilt CV
+\end{codebox}

@@ -1,0 +1,33 @@
+\section{Cross Validation}
+Can be used for \textit{model assessment} (estimate test MSE) and \textit{model selection} (choose tuning parameters, variable selection). But not both at the same time (use double CV instead). \\
+\textbf{Validation set:} split data into two halves, train on one, test on the other (most bias).
+\textbf{k-Fold:} same, but with many folds. Try all folds for test and average metrics over the folds (in between). $\text{Var}(\hat {\theta_k}) = 1/K \cdot \hat {\text{Var}}(MSEs)$ \textbf{LOOCV:} extreme version where each data point is a fold (least bias, high variance since the datasets are correlated).\\
+\textbf{LOOCV effiecent computation:} Assuming a linear model ($\hat Y = \mathcal{S}Y$) we have a fast way to find LOOCV. \\
+$\text{LOOCV} = \frac{1}{n}\sum_{i=1}^n\left(\frac{Y_i-\hat m(X_i)}{1-\mathcal{S}_{ii}}\right)^2$\\
+An historical approximation of this is GCV:\\
+$\text{GCV} = \frac{1}{n}\sum_{i=1}^n\left(\frac{Y_i-\hat m(X_i)}{1-\frac{1}{n}\mathbf{tr}(\mathcal{S})}\right)^2$
+
+\begin{codebox}{r}{Cross validation}
+# Workaround for categorical variables
+predict.regsubsets <- function(reg, new.data, id) {
+  form <- as.formula(reg$call[[2]])
+  mat <- model.matrix(form, new.data)
+  coefi <- coef(reg, id=id)
+  return(mat[,names(coefi)]%*%coefi)
+}
+n = nrow(data)
+nfolds = 10
+idx=seq(1:n)
+idx <- idx[sample(n, replace=F)] # comment out for non-random
+fold_indicator = cut(idx, breaks=nfolds, labels=F)
+sse = 0
+for(i in 1:nfolds){ 
+  train <- data[i != fold_indicator,]
+  test <- data[i == fold_indicator,]
+  fit <- lm(y~x+I(x^2), data=train)
+  preds <- predict(fit, test)
+  sse = sse + mean((preds-test$y)^2 )
+}
+mse = sse / nfolds
+mse
+\end{codebox}

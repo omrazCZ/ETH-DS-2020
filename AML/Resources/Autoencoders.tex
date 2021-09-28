@@ -5,10 +5,12 @@
 \subsection*{Infomax principle}
 Let $I(X, Y) \doteq H(X) - H(X\vert Y)$ be the mutual information.\\
 $\theta^* = \argmax_\theta I(X, {enc}_\theta X)$\\
-$\theta^* \simeq \argmax_\theta \sum_i\mathbbm{E}_Z\left[\log p(x_i\vert Z)\right] $\\
-It is informative but not Disentangled and Robust
-\subsection*{Variation Autoencoders}
-Let $p_{\theta'}(\cdot)$ be our prior, $p_\theta(\cdot\vert z)$ be our likelihood, $q_\lambda(z\vert x)$ the postirior.\\
-$\theta^*, \theta'^*,\lambda^* = \argmax \sum_{i=1}^n \log p_{\theta, \theta'}(x_i)$\\In practice we maximize the Evidence Lower Bounds: \\
-$ELBO = \mathbbm{E}_{Z \sim q_\lambda(\cdot, x_i)}\left[\log{p_\theta (x_i\vert z)}\right]$ (infomax) 
-$-KL\left(q_\lambda(\cdot,x_i)\vert \vert p_{\theta'}\right)$ (- distance from the prior)
+$\theta^* \simeq \argmax_\theta \sum_i\mathbbm{E}_{Z | X=x_{i}} \left[\log p(x_i\vert Z)\right] $\\
+Informative, but not Disentangled and Robust
+\subsection*{Variational Autoencoders}
+Let $p_{\theta'}(\cdot)$ be our prior, $p_\theta(\cdot\vert z)$ be our likelihood, $q_\phi(z\vert x)$ the posterior.\\
+$\theta^*, \theta'^*,\phi^* = \argmax \sum_{i=1}^n \log p_{\theta, \theta'}(x_i) \geq ELBO$ \\In practice we maximize the ELBO: \\
+$ELBO = \mathbbm{E}_{Z \sim q_\phi(\cdot | x_i)}\left[\log{p_\theta (x_i\vert z)}\right]$ (infomax) 
+$-KL\left(q_\phi(\cdot|x_i)\vert \vert p_{\theta'}(\cdot)\right)$ (- distance to the prior)
+$=$ \\
+$\mathbbm{E}_{Z \sim q_\phi(\cdot | x_i)}\left[\log{p_\theta (x_i\vert z)}\right]-\mathbbm{E}_{Z \sim q_\phi(\cdot | x_i)}\left[\log{\frac{q_\phi(z|x_i)}{p_{\theta'} (z)}}\right]$
